@@ -25,3 +25,8 @@ export const EVENT_DAY = Object.freeze({
   startDate: 1,
   endDate: 31,
 });
+
+export const MENU_COUNT = Object.freeze({
+  minimum: 1,
+  maximun: 20,
+});
