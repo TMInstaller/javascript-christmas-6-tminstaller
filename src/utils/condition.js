@@ -29,3 +29,9 @@ export const checkIsInteger = (data) => {
     throw new Error(ERROR_MESSAGE.isNotInteger);
   }
 };
+
+export const checkIsIncluded = (data, element) => {
+  if (!data.includes(element)) {
+    throw new Error(ERROR_MESSAGE.isInvalidInput);
+  }
+};
