@@ -1,5 +1,12 @@
 import { ERROR_MESSAGE } from "../constants/error.js";
 import { EVENT_DAY } from "../constants/number.js";
+import {
+  checkIsEmpty,
+  checkIsInteger,
+  checkIsNumber,
+  checkIsOverMaximum,
+  checkIsUnderMinimum,
+} from "../utils/condition.js";
 import { stringToNumber } from "../utils/conversion.js";
 
 export class VisitDate {
@@ -15,32 +22,22 @@ export class VisitDate {
   }
 
   #isDataEmpty(stringData) {
-    if (!stringData.trim().length) {
-      throw new Error(ERROR_MESSAGE.isEmpty);
-    }
+    checkIsEmpty(stringData);
   }
 
   #isDataNumber(stringData) {
-    if (isNaN(stringData)) {
-      throw new Error(ERROR_MESSAGE.isNotNumber);
-    }
+    checkIsNumber(stringData);
   }
 
   #isDataUnderMinimum(stringData) {
-    if (stringToNumber(stringData) < EVENT_DAY.startDate) {
-      throw new Error(ERROR_MESSAGE.isUnderMinimum);
-    }
+    checkIsUnderMinimum(stringToNumber(stringData), EVENT_DAY.startDate);
   }
 
   #isDataOverMaximum(stringData) {
-    if (stringToNumber(stringData) > EVENT_DAY.endDate) {
-      throw new Error(ERROR_MESSAGE.isOverMaximum);
-    }
+    checkIsOverMaximum(stringToNumber(stringData), EVENT_DAY.endDate);
   }
 
   #isDataInteger(stringData) {
-    if (!Number.isInteger(stringToNumber(stringData))) {
-      throw new Error(ERROR_MESSAGE.isNotInteger);
-    }
+    checkIsInteger(stringToNumber(stringData));
   }
 }
