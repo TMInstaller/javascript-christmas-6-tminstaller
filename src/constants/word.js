@@ -28,3 +28,10 @@ export const BEVERAGE = Object.freeze({
   redWine: `레드와인`,
   champagne: `샴페인`,
 });
+
+export const FULL_MENU = Object.freeze({
+  APPETIZER,
+  MAIN,
+  DESSERT,
+  BEVERAGE,
+});

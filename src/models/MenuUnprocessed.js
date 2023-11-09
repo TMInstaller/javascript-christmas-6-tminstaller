@@ -1,6 +1,6 @@
-import { DIVIDE_CONVENTION } from "../constants/convention";
-import { checkIsEmpty, checkIsIncluded } from "../utils/condition";
-import { divideData } from "../utils/conversion";
+import { DIVIDE_CONVENTION } from "../constants/convention.js";
+import { checkIsEmpty, checkIsIncluded } from "../utils/condition.js";
+import { divideData } from "../utils/conversion.js";
 
 export class MenuUnprocessed {
   #stringData;
