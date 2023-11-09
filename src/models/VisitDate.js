@@ -7,10 +7,17 @@ export class VisitDate {
 
   constructor(stringData) {
     this.#stringData = stringData;
+    this.#isDataEmpty(stringData);
     this.#isDataNumber(stringData);
     this.#isDataUnderMinimum(stringData);
     this.#isDataOverMaximum(stringData);
     this.#isDataInteger(stringData);
+  }
+
+  #isDataEmpty(stringData) {
+    if (!stringData.trim().length) {
+      throw new Error(ERROR_MESSAGE.isEmpty);
+    }
   }
 
   #isDataNumber(stringData) {

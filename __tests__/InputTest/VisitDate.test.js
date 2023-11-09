@@ -2,6 +2,13 @@ import { ERROR_CONVENTION } from "../../src/constants/convention.js";
 import { VisitDate } from "../../src/models/VisitDate.js";
 
 describe("VisitDate 모델 테스트", () => {
+  test("입력받은 날짜가 비어있는 값인지 확인", async () => {
+    const input = "";
+    expect(() => {
+      new VisitDate(input);
+    }).toThrow(ERROR_CONVENTION);
+  });
+
   test("입력받은 날짜를 숫자로 변환했을 때 Number 형식인 지 확인", async () => {
     const input = "abc";
     expect(() => {
