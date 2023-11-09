@@ -1,4 +1,3 @@
-import { ERROR_MESSAGE } from "../constants/error.js";
 import { EVENT_DAY } from "../constants/number.js";
 import {
   checkIsEmpty,
