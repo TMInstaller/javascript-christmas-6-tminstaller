@@ -21,7 +21,7 @@ export const CHRISTMAS_D_DAY = Object.freeze({
   maxDiscountAmount: 3400,
 });
 
-export const WEEKDAY = Object.freeze({
+export const EVENT_DAY = Object.freeze({
   startDate: 1,
   endDate: 31,
 });
