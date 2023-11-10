@@ -1,4 +1,4 @@
-import { EVENT_DAY } from "../constants/number.js";
+import { EVENT } from "../constants/number.js";
 import {
   checkIsEmpty,
   checkIsInteger,
@@ -29,11 +29,11 @@ export class VisitDate {
   }
 
   #isDataUnderMinimum(stringData) {
-    checkIsUnderMinimum(stringToNumber(stringData), EVENT_DAY.startDate);
+    checkIsUnderMinimum(stringToNumber(stringData), EVENT.startDate);
   }
 
   #isDataOverMaximum(stringData) {
-    checkIsOverMaximum(stringToNumber(stringData), EVENT_DAY.endDate);
+    checkIsOverMaximum(stringToNumber(stringData), EVENT.endDate);
   }
 
   #isDataInteger(stringData) {

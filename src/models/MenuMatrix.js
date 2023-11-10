@@ -69,14 +69,15 @@ export class MenuMatrix {
   }
   // TODO: 배열 내부에 음료만 존재하는지 확인
   #isMatrixHasOnlyBeverages(matrixData) {
-    let isOnlyBeverage = false;
     // 음료가 가지고 있는 이름들만 모아놓은 배열 생성
     const beveragesList = makeObjectValuesToArray(BEVERAGE);
+    console.log(beveragesList);
     // 음료 안에 들어있지 않다면 return, 모든 순회를 마쳤다면 throw
     for (const arrayData of matrixData) {
       if (!beveragesList.includes(arrayData[0])) {
-        throw new Error(ERROR_MESSAGE.isInvalidOrder);
+        return;
       }
     }
+    throw new Error(ERROR_MESSAGE.isInvalidOrder);
   }
 }

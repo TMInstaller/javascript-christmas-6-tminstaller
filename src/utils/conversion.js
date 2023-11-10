@@ -6,8 +6,12 @@ export const divideData = (stringData, divisor) => {
   return stringData.split(divisor);
 };
 
-export const makeObjectValuesToArray = (objectData) => {
+export const makeObjectValuesToArrayFlat = (objectData) => {
   return Object.values(objectData).flatMap((value) => Object.values(value));
+};
+
+export const makeObjectValuesToArray = (objectData) => {
+  return Object.values(objectData);
 };
 
 export const makeObjectToArray = (objectData) => {
