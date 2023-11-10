@@ -31,3 +31,5 @@ export const MENU_COUNT = Object.freeze({
   minimum: 1,
   maximun: 20,
 });
+
+export const GIVEAWAY_COUNT = 1;

@@ -1,3 +1,7 @@
+import { COUNT_CONVENTION } from "./convention";
+import { GIVEAWAY_COUNT } from "./number";
+import { BEVERAGE } from "./word";
+
 export const INPUT_MESSAGE = Object.freeze({
   introducePlanner: `안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.`,
   askWhenToVisit: `12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)`,
@@ -9,6 +13,7 @@ export const BENEFITS_MESSAGE = Object.freeze({
   orderedMenu: `<주문 메뉴>`,
   priceBeforeDiscount: `<할인 전 총주문 금액>`,
   giveawayMenu: `<증정 메뉴>`,
+  giveawayGoods: `${BEVERAGE.champagne} ${GIVEAWAY_COUNT}${COUNT_CONVENTION}`,
   benefits: `<혜택 내역>`,
   totalBenefitsPrice: `<총혜택 금액>`,
   priceAfterDiscount: `<할인 후 예상 결제 금액>`,
