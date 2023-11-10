@@ -29,7 +29,10 @@ describe("MenuMatrix 모델 테스트", () => {
   });
 
   test(`주문내역에 음료만 있다면 예외를 발생시킨다.`, async () => {
-    const input = [["레드와인", 2]];
+    const input = [
+      ["레드와인", 2],
+      ["샴페인", 1],
+    ];
     expect(() => {
       new MenuMatrix(input);
     }).toThrow(ERROR_CONVENTION);
