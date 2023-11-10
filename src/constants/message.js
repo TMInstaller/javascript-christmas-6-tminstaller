@@ -1,6 +1,6 @@
-import { COUNT_CONVENTION } from "./convention";
-import { GIVEAWAY_COUNT } from "./number";
-import { BEVERAGE } from "./word";
+import { COUNT_CONVENTION } from "./convention.js";
+import { GIVEAWAY_COUNT } from "./number.js";
+import { BEVERAGE } from "./word.js";
 
 export const INPUT_MESSAGE = Object.freeze({
   introducePlanner: `안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.`,
