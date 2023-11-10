@@ -9,3 +9,9 @@ export const divideData = (stringData, divisor) => {
 export const makeObjectValuesToArray = (objectData) => {
   return Object.values(objectData).flatMap((value) => Object.values(value));
 };
+
+export const makeObjectToArray = (objectData) => {
+  return Object.values(objectData).flatMap((category) =>
+    Object.entries(category).flatMap(([key, value]) => [[key, value]])
+  );
+};

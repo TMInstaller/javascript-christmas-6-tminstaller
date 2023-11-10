@@ -21,9 +21,10 @@ export const CHRISTMAS_D_DAY = Object.freeze({
   maxDiscountAmount: 3400,
 });
 
-export const EVENT_DAY = Object.freeze({
+export const EVENT = Object.freeze({
   startDate: 1,
   endDate: 31,
+  minimumAmount: 10000,
 });
 
 export const MENU_COUNT = Object.freeze({
