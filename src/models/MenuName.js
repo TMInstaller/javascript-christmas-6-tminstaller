@@ -22,7 +22,6 @@ export class MenuName {
   // 실제 존재하는 메뉴이름인지 확인
   #isDataIncludedInMenu(stringData) {
     const menuList = makeObjectValuesToArrayFlat(FULL_MENU);
-    console.log({ menuList });
     checkIsIncluded(menuList, stringData);
   }
 }

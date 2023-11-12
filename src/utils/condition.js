@@ -6,9 +6,9 @@ export const checkIsEmpty = (data) => {
   }
 };
 
-export const checkIsNumber = (data) => {
+export const checkIsNumber = (data, errMessage) => {
   if (isNaN(data)) {
-    throw new Error(ERROR_MESSAGE.isNotNumber);
+    throw new Error(errMessage);
   }
 };
 

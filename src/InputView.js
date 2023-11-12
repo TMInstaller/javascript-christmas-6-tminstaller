@@ -41,6 +41,7 @@ const InputView = {
           menu[1] = stringToNumber(menu[1]);
         }
         new MenuMatrix(menuMatrix);
+        OutputView.printDivideSection();
         return menuMatrix;
       } catch (error) {
         OutputView.printError(error);

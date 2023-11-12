@@ -1,10 +1,12 @@
+import OutputView from "../OutputView.js";
+import { ERROR_MESSAGE } from "../constants/error.js";
 import { MENU_COUNT } from "../constants/number.js";
 import {
   checkIsEmpty,
   checkIsInteger,
-  checkIsNumber,
   checkIsOverMaximum,
   checkIsUnderMinimum,
+  checkIsNumber,
 } from "../utils/condition.js";
 import { stringToNumber } from "../utils/conversion.js";
 
@@ -25,7 +27,11 @@ export class MenuCount {
   }
 
   #isDataNumber(stringData) {
-    checkIsNumber(stringData);
+    try {
+      checkIsNumber(stringData, ERROR_MESSAGE.isInvalidOrder);
+    } catch (error) {
+      OutputView.printError(error.message);
+    }
   }
 
   #isDataUnderMinimum(stringData) {
