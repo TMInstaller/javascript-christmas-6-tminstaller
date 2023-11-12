@@ -1,3 +1,11 @@
+export const EVENT_NAME = Object.freeze({
+  christmas: `크리스마스 디데이 할인`,
+  weekdays: `평일 할인`,
+  weekends: `주말 할인`,
+  special: `특별 할인`,
+  giveaway: `증정 이벤트`,
+});
+
 export const MENU = Object.freeze({
   appetizer: `에피타이저`,
   main: `메인`,
