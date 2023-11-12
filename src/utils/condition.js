@@ -35,3 +35,15 @@ export const checkIsIncluded = (data, element) => {
     throw new Error(ERROR_MESSAGE.isInvalidInput);
   }
 };
+
+export const checkIsPositiveNumber = (data) => {
+  return data !== 0 && !isNaN(data);
+};
+
+export const checkIsNotZero = (data) => {
+  return data !== 0;
+};
+
+export const checkIsTypeObject = (data) => {
+  return typeof data === "object";
+};

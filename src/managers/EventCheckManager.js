@@ -1,4 +1,7 @@
-import { makeMatrixOrderedMenu } from "../utils/conversion.js";
+import {
+  createCategoryCounts,
+  makeMatrixOrderedMenu,
+} from "../utils/creation.js";
 
 export class EventCheckManager {
   // 배열 안에 들어있는 모든 메뉴의 가격 합이 10,000원을 넘지 않는지 확인
@@ -34,23 +37,7 @@ export class EventCheckManager {
   // 카테고리 별 주문한 메뉴의 개수를 반환하는 로직
   checkHowManyMenuInCategory(orderedMenu) {
     const menuMatrix = makeMatrixOrderedMenu();
-    const categoryCounts = {};
-    for (const [itemName, quantity] of orderedMenu) {
-      // menuMatrix에서 아이템을 찾아 그 카테고리를 확인
-      const itemEntry = menuMatrix.find(
-        ([_, koreanName]) => koreanName === itemName
-      );
-      if (itemEntry) {
-        const category = itemEntry[0];
-
-        // 카테고리별 수량을 업데이트
-        if (categoryCounts[category]) {
-          categoryCounts[category] += quantity;
-        } else {
-          categoryCounts[category] = quantity;
-        }
-      }
-    }
+    const categoryCounts = createCategoryCounts(orderedMenu, menuMatrix);
     return categoryCounts;
   }
 

@@ -1,12 +1,18 @@
 import { Console } from "@woowacourse/mission-utils";
 import { BENEFITS_MESSAGE, EMPTY_LINE } from "./constants/message.js";
-import {
-  COUNT_CONVENTION,
-  NOTHING_CONVENTION,
-} from "./constants/convention.js";
+import { NOTHING_CONVENTION } from "./constants/convention.js";
 import { EVENT_NAME } from "./constants/word.js";
-import { makeNumberToKoreaMoney } from "./utils/conversion.js";
+import {
+  convertMatrixItemToFormattedString,
+  convertNumberToKoreaMoney,
+} from "./utils/conversion.js";
 import { EventCheckManager } from "./managers/EventCheckManager.js";
+import { EVENT } from "./constants/number.js";
+import {
+  checkIsNotZero,
+  checkIsPositiveNumber,
+  checkIsTypeObject,
+} from "./utils/condition.js";
 
 const eventCheckManager = new EventCheckManager();
 
@@ -30,47 +36,41 @@ const OutputView = {
 
   printOrderedMenu(orderedMenu) {
     Console.print(BENEFITS_MESSAGE.orderedMenu);
-    Console.print(
-      orderedMenu
-        .map(
-          ([menuItem, quantity]) => `${menuItem} ${quantity}${COUNT_CONVENTION}`
-        )
-        .join("\n")
-    );
+    Console.print(convertMatrixItemToFormattedString(orderedMenu));
     this.printDivideSection();
   },
 
   printPriceBeforeDiscount(sumAmount) {
     Console.print(BENEFITS_MESSAGE.priceBeforeDiscount);
-    const formattedAmount = makeNumberToKoreaMoney(sumAmount);
-    Console.print(formattedAmount);
+    Console.print(convertNumberToKoreaMoney(sumAmount));
     Console.print(EMPTY_LINE);
   },
 
   printSatisfiedGiveAwayMenu(sumAmount) {
     Console.print(BENEFITS_MESSAGE.giveawayMenu);
-    if (sumAmount < 120000) {
+    if (sumAmount < EVENT.giveaway) {
       Console.print(NOTHING_CONVENTION);
     }
-    if (sumAmount >= 120000) {
+    if (sumAmount >= EVENT.giveaway) {
       Console.print(BENEFITS_MESSAGE.giveawayGoods);
     }
     Console.print(EMPTY_LINE);
   },
 
+  // TODO: 추후에 이벤트가 없을때와 있을때로 메서드 분리
   printBenefits(date, sumAmount, orderedCategories) {
     Console.print(BENEFITS_MESSAGE.benefits);
-    if (sumAmount < 10000) {
+    if (sumAmount < EVENT.minimumAmount) {
       Console.print(NOTHING_CONVENTION);
     }
-    if (sumAmount >= 10000) {
-      // TODO: 여기에 date를 활용해서 혜택 목록 구현
+    if (sumAmount >= EVENT.minimumAmount) {
       // 크리스마스 조건문
       const christmasDiscountAmount =
         eventCheckManager.checkChristmasDiscountAmount(date);
-      if (christmasDiscountAmount !== 0 && !isNaN(christmasDiscountAmount)) {
+
+      if (checkIsPositiveNumber(christmasDiscountAmount)) {
         Console.print(
-          `${EVENT_NAME.christmas}: -${makeNumberToKoreaMoney(
+          `${EVENT_NAME.christmas}: -${convertNumberToKoreaMoney(
             christmasDiscountAmount
           )}`
         );
@@ -81,9 +81,9 @@ const OutputView = {
           date,
           orderedCategories
         );
-      if (weekdaysDiscountAmount !== 0 && !isNaN(weekdaysDiscountAmount)) {
+      if (checkIsPositiveNumber(weekdaysDiscountAmount)) {
         Console.print(
-          `${EVENT_NAME.weekdays}: -${makeNumberToKoreaMoney(
+          `${EVENT_NAME.weekdays}: -${convertNumberToKoreaMoney(
             weekdaysDiscountAmount
           )}`
         );
@@ -94,9 +94,9 @@ const OutputView = {
           date,
           orderedCategories
         );
-      if (weekendsDiscountAmount !== 0 && !isNaN(weekendsDiscountAmount)) {
+      if (checkIsPositiveNumber(weekendsDiscountAmount)) {
         Console.print(
-          `${EVENT_NAME.weekends}: -${makeNumberToKoreaMoney(
+          `${EVENT_NAME.weekends}: -${convertNumberToKoreaMoney(
             weekendsDiscountAmount
           )}`
         );
@@ -106,7 +106,7 @@ const OutputView = {
         eventCheckManager.checkSpecialEventDiscountAmount(date);
       if (specialDiscountAmount !== 0) {
         Console.print(
-          `${EVENT_NAME.special}: -${makeNumberToKoreaMoney(
+          `${EVENT_NAME.special}: -${convertNumberToKoreaMoney(
             specialDiscountAmount
           )}`
         );
@@ -114,15 +114,16 @@ const OutputView = {
       // 증정 조건문
       const giveawayDiscountAmount =
         eventCheckManager.checkGiveawayEventDiscountAmount(sumAmount);
-      if (giveawayDiscountAmount !== 0) {
+      if (checkIsNotZero(giveawayDiscountAmount)) {
         Console.print(
-          `${EVENT_NAME.giveaway}: -${makeNumberToKoreaMoney(
+          `${EVENT_NAME.giveaway}: -${convertNumberToKoreaMoney(
             giveawayDiscountAmount
           )}`
         );
       }
 
       // 여기에 혜택금액 합과 증정 혜택금액을 return
+      // TODO: 이부분도 모듈화
       const totalBenefits =
         christmasDiscountAmount +
         weekdaysDiscountAmount +
@@ -141,9 +142,9 @@ const OutputView = {
 
   printTotalBenefitsPrice(totalBenefitsPrice) {
     Console.print(BENEFITS_MESSAGE.totalBenefitsPrice);
-    if (typeof totalBenefitsPrice === "object") {
+    if (checkIsTypeObject(totalBenefitsPrice)) {
       const total = totalBenefitsPrice.total + totalBenefitsPrice.giveaway;
-      Console.print(`-${makeNumberToKoreaMoney(total)}`);
+      Console.print(`-${convertNumberToKoreaMoney(total)}`);
     } else {
       Console.print(NOTHING_CONVENTION);
     }
@@ -152,9 +153,9 @@ const OutputView = {
 
   printPriceAfterDiscount(priceBeforeDiscount, totalBenefitsPrice) {
     Console.print(BENEFITS_MESSAGE.priceAfterDiscount);
-    if (typeof totalBenefitsPrice === "object") {
+    if (checkIsTypeObject(totalBenefitsPrice)) {
       Console.print(
-        `${makeNumberToKoreaMoney(
+        `${convertNumberToKoreaMoney(
           priceBeforeDiscount - totalBenefitsPrice.total
         )}`
       );
@@ -164,11 +165,15 @@ const OutputView = {
     Console.print(EMPTY_LINE);
   },
 
+  // TODO: 모듈화하기
   printSatisfiedEventBadge(totalBenefitsPrice) {
     Console.print(BENEFITS_MESSAGE.eventBadge);
     const totalBenefits =
       totalBenefitsPrice.total + totalBenefitsPrice.giveaway;
-    if (typeof totalBenefitsPrice === "object" && totalBenefits >= 5000) {
+    if (
+      checkIsTypeObject(totalBenefitsPrice) &&
+      totalBenefits >= EVENT.starBadge
+    ) {
       if (totalBenefits >= 20000) {
         Console.print("산타");
       } else if (totalBenefits >= 10000) {

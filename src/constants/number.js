@@ -25,6 +25,10 @@ export const EVENT = Object.freeze({
   startDate: 1,
   endDate: 31,
   minimumAmount: 10000,
+  giveaway: 120000,
+  starBadge: 5000,
+  treeBadge: 10000,
+  santaBadge: 20000,
 });
 
 export const MENU_COUNT = Object.freeze({
