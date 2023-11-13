@@ -11,9 +11,9 @@ class App {
 
   async run() {
     OutputView.printStartMessage();
-    const { dateToVisit, orderedMenu } = await this.readInputs();
+    const { dateToVisit, orderedMenu } = await InputView.readInputs();
     const { amountBeforeDiscount, orderedCategories } =
-      this.calculateDiscounts(orderedMenu);
+      this.discountCalculator.calculateDiscounts(orderedMenu);
 
     const resultsData = {
       orderedMenu,
@@ -25,20 +25,7 @@ class App {
     this.printResults(resultsData);
   }
 
-  async readInputs() {
-    const dateToVisit = await InputView.readVisitDate();
-    const orderedMenu = await InputView.readMenu();
-    return { dateToVisit, orderedMenu };
-  }
-
-  calculateDiscounts(orderedMenu) {
-    const amountBeforeDiscount =
-      this.discountCalculator.calculateTotalAmount(orderedMenu);
-    const orderedCategories =
-      this.eventCheckManager.checkHowManyMenuInCategory(orderedMenu);
-    return { amountBeforeDiscount, orderedCategories };
-  }
-
+  // TODO: 이 아래 OutputView.js로 이동
   printResults(resultsData) {
     this.printOrderDetails(resultsData);
     this.printBenefitsDetails(resultsData);

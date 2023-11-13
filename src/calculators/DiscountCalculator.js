@@ -1,6 +1,10 @@
+import { EventCheckManager } from "../managers/EventCheckManager.js";
 import { makeMatrixOrderedMenu } from "../utils/creation.js";
 
 export class DiscountCalculator {
+  constructor() {
+    this.eventCheckManager = new EventCheckManager();
+  }
   calculateChristmasDiscount(date) {
     if (date < 26) {
       return 1000 + (date - 1) * 100;
@@ -50,5 +54,11 @@ export class DiscountCalculator {
       }
     }
     return countAmount;
+  }
+  calculateDiscounts(orderedMenu) {
+    const amountBeforeDiscount = this.calculateTotalAmount(orderedMenu);
+    const orderedCategories =
+      this.eventCheckManager.checkHowManyMenuInCategory(orderedMenu);
+    return { amountBeforeDiscount, orderedCategories };
   }
 }

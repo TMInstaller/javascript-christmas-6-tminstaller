@@ -41,6 +41,11 @@ const InputView = {
       }
     }
   },
+  async readInputs() {
+    const dateToVisit = await this.readVisitDate();
+    const orderedMenu = await this.readMenu();
+    return { dateToVisit, orderedMenu };
+  },
 };
 
 export default InputView;
