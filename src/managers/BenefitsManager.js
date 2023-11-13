@@ -37,14 +37,4 @@ export class BenefitsManager {
 
     return totalBenefits;
   }
-
-  determineEventBadge(totalBenefits) {
-    if (totalBenefits >= 20000) {
-      return "산타";
-    } else if (totalBenefits >= 10000) {
-      return "트리";
-    } else if (totalBenefits >= 5000) {
-      return "별";
-    }
-  }
 }

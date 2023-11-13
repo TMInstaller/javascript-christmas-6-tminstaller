@@ -1,6 +1,6 @@
 export const PRICE = Object.freeze({
   pineMushroomSoup: 6000,
-  tapas: 5000,
+  tapas: 5500,
   caesarSalad: 8000,
   tBoneSteak: 55000,
   bbqRibs: 54000,

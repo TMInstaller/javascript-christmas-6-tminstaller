@@ -179,7 +179,7 @@ const OutputView = {
         )}`
       );
     } else {
-      Console.print(NOTHING_CONVENTION);
+      Console.print(convertNumberToKoreaMoney(priceBeforeDiscount));
     }
     Console.print(EMPTY_LINE);
   },
