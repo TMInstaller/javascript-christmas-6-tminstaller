@@ -75,39 +75,29 @@ const OutputView = {
     Console.print(BENEFITS_MESSAGE.benefits);
     this.printBenefitsWhenIsUnderAmount(sumAmount);
     if (checkIsOver(sumAmount, EVENT.minimumAmount)) {
-      this.printBenefitsItems(date, orderedCategories);
-      const totalBenefitsArray = benefitsManager.calculateBenefits(
+      const totalBenefitsPrice = this.printBenefitsWhenIsOverAmount(
         date,
+        sumAmount,
         orderedCategories
       );
-      const giveawayDiscountAmount =
-        this.printGiveawayDiscountAmount(sumAmount);
-      const totalBenefitsPrice = {
-        total: sumArray(totalBenefitsArray),
-        giveaway: giveawayDiscountAmount,
-      };
-      Console.print(EMPTY_LINE);
       return totalBenefitsPrice;
     }
     Console.print(EMPTY_LINE);
     return 0;
   },
   printBenefitsWhenIsOverAmount(date, sumAmount, orderedCategories) {
-    if (checkIsOver(sumAmount, EVENT.minimumAmount)) {
-      this.printBenefitsItems(date, orderedCategories);
-      const totalBenefitsArray = benefitsManager.calculateBenefits(
-        date,
-        orderedCategories
-      );
-      const giveawayDiscountAmount =
-        this.printGiveawayDiscountAmount(sumAmount);
-      const totalBenefitsPrice = {
-        total: sumArray(totalBenefitsArray),
-        giveaway: giveawayDiscountAmount,
-      };
-      Console.print(EMPTY_LINE);
-      return totalBenefitsPrice;
-    }
+    this.printBenefitsItems(date, orderedCategories);
+    const totalBenefitsArray = benefitsManager.calculateBenefits(
+      date,
+      orderedCategories
+    );
+    const giveawayDiscountAmount = this.printGiveawayDiscountAmount(sumAmount);
+    const totalBenefitsPrice = {
+      total: sumArray(totalBenefitsArray),
+      giveaway: giveawayDiscountAmount,
+    };
+    Console.print(EMPTY_LINE);
+    return totalBenefitsPrice;
   },
   printBenefitsWhenIsUnderAmount(sumAmount) {
     if (checkIsUnder(sumAmount, EVENT.minimumAmount)) {
