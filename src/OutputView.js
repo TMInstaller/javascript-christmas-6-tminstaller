@@ -17,8 +17,10 @@ import {
   checkIsUnder,
 } from "./utils/condition.js";
 import { sumArray } from "./utils/calculate.js";
+import { DiscountCalculator } from "./calculators/DiscountCalculator.js";
 
 const eventCheckManager = new EventCheckManager();
+const discountCalculator = new DiscountCalculator();
 
 const OutputView = {
   printDivideSection() {
@@ -95,8 +97,7 @@ const OutputView = {
   printChristmasDiscountAmount(date) {
     // 크리스마스 조건문
     const christmasDiscountAmount =
-      eventCheckManager.checkChristmasDiscountAmount(date);
-
+      discountCalculator.calculateChristmasDiscount(date);
     if (checkIsPositiveNumber(christmasDiscountAmount)) {
       Console.print(
         `${EVENT_NAME.christmas}: -${convertNumberToKoreaMoney(
@@ -107,11 +108,10 @@ const OutputView = {
     return christmasDiscountAmount;
   },
   printWeekdaysDiscountAmount(date, orderedCategories) {
-    const weekdaysDiscountAmount =
-      eventCheckManager.checkWeekDaysEventDiscountAmount(
-        date,
-        orderedCategories
-      );
+    const weekdaysDiscountAmount = discountCalculator.calculateWeekdaysDiscount(
+      date,
+      orderedCategories
+    );
     if (checkIsPositiveNumber(weekdaysDiscountAmount)) {
       Console.print(
         `${EVENT_NAME.weekdays}: -${convertNumberToKoreaMoney(
@@ -122,11 +122,10 @@ const OutputView = {
     return weekdaysDiscountAmount;
   },
   printWeekendsDiscountAmount(date, orderedCategories) {
-    const weekendsDiscountAmount =
-      eventCheckManager.checkWeekendEventDiscountAmount(
-        date,
-        orderedCategories
-      );
+    const weekendsDiscountAmount = discountCalculator.calculateWeekendsDiscount(
+      date,
+      orderedCategories
+    );
     if (checkIsPositiveNumber(weekendsDiscountAmount)) {
       Console.print(
         `${EVENT_NAME.weekends}: -${convertNumberToKoreaMoney(
@@ -138,7 +137,7 @@ const OutputView = {
   },
   printSpecialDiscountAmount(date) {
     const specialDiscountAmount =
-      eventCheckManager.checkSpecialEventDiscountAmount(date);
+      discountCalculator.calculateSpecialDiscount(date);
     if (specialDiscountAmount !== 0) {
       Console.print(
         `${EVENT_NAME.special}: -${convertNumberToKoreaMoney(
