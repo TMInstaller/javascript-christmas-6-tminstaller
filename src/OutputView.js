@@ -18,8 +18,10 @@ import {
 } from "./utils/condition.js";
 import { sumArray } from "./utils/calculate.js";
 import { DiscountCalculator } from "./calculators/DiscountCalculator.js";
+import { BenefitsManager } from "./managers/BenefitsManager.js";
 
 const eventCheckManager = new EventCheckManager();
+const benefitsManager = new BenefitsManager();
 const discountCalculator = new DiscountCalculator();
 
 const OutputView = {
@@ -62,23 +64,24 @@ const OutputView = {
     }
     Console.print(EMPTY_LINE);
   },
-  DiscountArray(date, orderedCategories) {
-    const christmas = this.printChristmasDiscountAmount(date);
-    const weekdays = this.printWeekdaysDiscountAmount(date, orderedCategories);
-    const weekends = this.printWeekendsDiscountAmount(date, orderedCategories);
-    const special = this.printSpecialDiscountAmount(date);
-    return [christmas, weekdays, weekends, special];
+  printBenefitsItems(date, orderedCategories) {
+    this.printChristmasDiscountAmount(date);
+    this.printWeekdaysDiscountAmount(date, orderedCategories);
+    this.printWeekendsDiscountAmount(date, orderedCategories);
+    this.printSpecialDiscountAmount(date);
   },
+  // TODO: 추가 모듈화 해보기
   printBenefits(date, sumAmount, orderedCategories) {
     Console.print(BENEFITS_MESSAGE.benefits);
     this.printBenefitsWhenIsUnderAmount(sumAmount);
     if (checkIsOver(sumAmount, EVENT.minimumAmount)) {
-      const totalBenefitsArray = this.DiscountArray(date, orderedCategories);
-      // 증정 조건문
+      this.printBenefitsItems(date, orderedCategories);
+      const totalBenefitsArray = benefitsManager.calculateBenefits(
+        date,
+        orderedCategories
+      );
       const giveawayDiscountAmount =
         this.printGiveawayDiscountAmount(sumAmount);
-
-      // 여기에 혜택금액 합과 증정 혜택금액을 return
       const totalBenefitsPrice = {
         total: sumArray(totalBenefitsArray),
         giveaway: giveawayDiscountAmount,
@@ -88,6 +91,23 @@ const OutputView = {
     }
     Console.print(EMPTY_LINE);
     return 0;
+  },
+  printBenefitsWhenIsOverAmount(date, sumAmount, orderedCategories) {
+    if (checkIsOver(sumAmount, EVENT.minimumAmount)) {
+      this.printBenefitsItems(date, orderedCategories);
+      const totalBenefitsArray = benefitsManager.calculateBenefits(
+        date,
+        orderedCategories
+      );
+      const giveawayDiscountAmount =
+        this.printGiveawayDiscountAmount(sumAmount);
+      const totalBenefitsPrice = {
+        total: sumArray(totalBenefitsArray),
+        giveaway: giveawayDiscountAmount,
+      };
+      Console.print(EMPTY_LINE);
+      return totalBenefitsPrice;
+    }
   },
   printBenefitsWhenIsUnderAmount(sumAmount) {
     if (checkIsUnder(sumAmount, EVENT.minimumAmount)) {
@@ -119,7 +139,6 @@ const OutputView = {
         )}`
       );
     }
-    return weekdaysDiscountAmount;
   },
   printWeekendsDiscountAmount(date, orderedCategories) {
     const weekendsDiscountAmount = discountCalculator.calculateWeekendsDiscount(

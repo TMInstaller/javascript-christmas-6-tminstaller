@@ -1,4 +1,3 @@
-import OutputView from "../OutputView.js";
 import { PRICE } from "../constants/number.js";
 import { FULL_MENU } from "../constants/word.js";
 import { increaseOrMaintain } from "./update.js";
@@ -18,14 +17,11 @@ export const makeMatrixOrderedMenu = () => {
 export const createCategoryCounts = (orderedMenu, matrixOrderedMenu) => {
   const categoryCounts = {};
   for (const [itemName, quantity] of orderedMenu) {
-    // matrixOrderedMenu에서 아이템을 찾아 그 카테고리를 확인
-    // TODO: 여기도 모듈화 하기
     const itemEntry = matrixOrderedMenu.find(
       ([_, koreanName]) => koreanName === itemName
     );
     if (itemEntry) {
       const category = itemEntry[0];
-      // 카테고리별 수량을 업데이트
       increaseOrMaintain(categoryCounts[category], quantity);
     }
   }
