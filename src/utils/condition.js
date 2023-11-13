@@ -47,3 +47,11 @@ export const checkIsNotZero = (data) => {
 export const checkIsTypeObject = (data) => {
   return typeof data === "object";
 };
+
+export const checkIsUnder = (data, value) => {
+  return data < value;
+};
+
+export const checkIsOver = (data, value) => {
+  return data >= value;
+};

@@ -1,3 +1,4 @@
+import OutputView from "../OutputView.js";
 import { PRICE } from "../constants/number.js";
 import { FULL_MENU } from "../constants/word.js";
 import { increaseOrMaintain } from "./update.js";

@@ -1,3 +1,4 @@
+// TODO: 순수하게 콘솔에 출력하는 기능만을 담당합니다.
 import { Console } from "@woowacourse/mission-utils";
 import { BENEFITS_MESSAGE, EMPTY_LINE } from "./constants/message.js";
 import { NOTHING_CONVENTION } from "./constants/convention.js";
@@ -10,8 +11,10 @@ import { EventCheckManager } from "./managers/EventCheckManager.js";
 import { EVENT } from "./constants/number.js";
 import {
   checkIsNotZero,
+  checkIsOver,
   checkIsPositiveNumber,
   checkIsTypeObject,
+  checkIsUnder,
 } from "./utils/condition.js";
 import { sumArray } from "./utils/calculate.js";
 
@@ -57,80 +60,23 @@ const OutputView = {
     }
     Console.print(EMPTY_LINE);
   },
-
-  // TODO: 추후에 이벤트가 없을때와 있을때로 메서드 분리
+  DiscountArray(date, orderedCategories) {
+    const christmas = this.printChristmasDiscountAmount(date);
+    const weekdays = this.printWeekdaysDiscountAmount(date, orderedCategories);
+    const weekends = this.printWeekendsDiscountAmount(date, orderedCategories);
+    const special = this.printSpecialDiscountAmount(date);
+    return [christmas, weekdays, weekends, special];
+  },
   printBenefits(date, sumAmount, orderedCategories) {
     Console.print(BENEFITS_MESSAGE.benefits);
-    if (sumAmount < EVENT.minimumAmount) {
-      Console.print(NOTHING_CONVENTION);
-    }
-    if (sumAmount >= EVENT.minimumAmount) {
-      // 크리스마스 조건문
-      const christmasDiscountAmount =
-        eventCheckManager.checkChristmasDiscountAmount(date);
-
-      if (checkIsPositiveNumber(christmasDiscountAmount)) {
-        Console.print(
-          `${EVENT_NAME.christmas}: -${convertNumberToKoreaMoney(
-            christmasDiscountAmount
-          )}`
-        );
-      }
-      // 평일 조건문
-      const weekdaysDiscountAmount =
-        eventCheckManager.checkWeekDaysEventDiscountAmount(
-          date,
-          orderedCategories
-        );
-      if (checkIsPositiveNumber(weekdaysDiscountAmount)) {
-        Console.print(
-          `${EVENT_NAME.weekdays}: -${convertNumberToKoreaMoney(
-            weekdaysDiscountAmount
-          )}`
-        );
-      }
-      // 주말 조건문
-      const weekendsDiscountAmount =
-        eventCheckManager.checkWeekendEventDiscountAmount(
-          date,
-          orderedCategories
-        );
-      if (checkIsPositiveNumber(weekendsDiscountAmount)) {
-        Console.print(
-          `${EVENT_NAME.weekends}: -${convertNumberToKoreaMoney(
-            weekendsDiscountAmount
-          )}`
-        );
-      }
-      // 특별 조건문
-      const specialDiscountAmount =
-        eventCheckManager.checkSpecialEventDiscountAmount(date);
-      if (specialDiscountAmount !== 0) {
-        Console.print(
-          `${EVENT_NAME.special}: -${convertNumberToKoreaMoney(
-            specialDiscountAmount
-          )}`
-        );
-      }
+    this.printBenefitsWhenIsUnderAmount(sumAmount);
+    if (checkIsOver(sumAmount, EVENT.minimumAmount)) {
+      const totalBenefitsArray = this.DiscountArray(date, orderedCategories);
       // 증정 조건문
       const giveawayDiscountAmount =
-        eventCheckManager.checkGiveawayEventDiscountAmount(sumAmount);
-      if (checkIsNotZero(giveawayDiscountAmount)) {
-        Console.print(
-          `${EVENT_NAME.giveaway}: -${convertNumberToKoreaMoney(
-            giveawayDiscountAmount
-          )}`
-        );
-      }
+        this.printGiveawayDiscountAmount(sumAmount);
 
       // 여기에 혜택금액 합과 증정 혜택금액을 return
-      // TODO: 이부분도 모듈화
-      const totalBenefitsArray = [
-        christmasDiscountAmount,
-        weekdaysDiscountAmount,
-        weekendsDiscountAmount,
-        specialDiscountAmount,
-      ];
       const totalBenefitsPrice = {
         total: sumArray(totalBenefitsArray),
         giveaway: giveawayDiscountAmount,
@@ -141,7 +87,79 @@ const OutputView = {
     Console.print(EMPTY_LINE);
     return 0;
   },
+  printBenefitsWhenIsUnderAmount(sumAmount) {
+    if (checkIsUnder(sumAmount, EVENT.minimumAmount)) {
+      Console.print(NOTHING_CONVENTION);
+    }
+  },
+  printChristmasDiscountAmount(date) {
+    // 크리스마스 조건문
+    const christmasDiscountAmount =
+      eventCheckManager.checkChristmasDiscountAmount(date);
 
+    if (checkIsPositiveNumber(christmasDiscountAmount)) {
+      Console.print(
+        `${EVENT_NAME.christmas}: -${convertNumberToKoreaMoney(
+          christmasDiscountAmount
+        )}`
+      );
+    }
+    return christmasDiscountAmount;
+  },
+  printWeekdaysDiscountAmount(date, orderedCategories) {
+    const weekdaysDiscountAmount =
+      eventCheckManager.checkWeekDaysEventDiscountAmount(
+        date,
+        orderedCategories
+      );
+    if (checkIsPositiveNumber(weekdaysDiscountAmount)) {
+      Console.print(
+        `${EVENT_NAME.weekdays}: -${convertNumberToKoreaMoney(
+          weekdaysDiscountAmount
+        )}`
+      );
+    }
+    return weekdaysDiscountAmount;
+  },
+  printWeekendsDiscountAmount(date, orderedCategories) {
+    const weekendsDiscountAmount =
+      eventCheckManager.checkWeekendEventDiscountAmount(
+        date,
+        orderedCategories
+      );
+    if (checkIsPositiveNumber(weekendsDiscountAmount)) {
+      Console.print(
+        `${EVENT_NAME.weekends}: -${convertNumberToKoreaMoney(
+          weekendsDiscountAmount
+        )}`
+      );
+    }
+    return weekendsDiscountAmount;
+  },
+  printSpecialDiscountAmount(date) {
+    const specialDiscountAmount =
+      eventCheckManager.checkSpecialEventDiscountAmount(date);
+    if (specialDiscountAmount !== 0) {
+      Console.print(
+        `${EVENT_NAME.special}: -${convertNumberToKoreaMoney(
+          specialDiscountAmount
+        )}`
+      );
+    }
+    return specialDiscountAmount;
+  },
+  printGiveawayDiscountAmount(sumAmount) {
+    const giveawayDiscountAmount =
+      eventCheckManager.checkGiveawayEventDiscountAmount(sumAmount);
+    if (checkIsNotZero(giveawayDiscountAmount)) {
+      Console.print(
+        `${EVENT_NAME.giveaway}: -${convertNumberToKoreaMoney(
+          giveawayDiscountAmount
+        )}`
+      );
+    }
+    return giveawayDiscountAmount;
+  },
   printTotalBenefitsPrice(totalBenefitsPrice) {
     Console.print(BENEFITS_MESSAGE.totalBenefitsPrice);
     if (checkIsTypeObject(totalBenefitsPrice)) {
