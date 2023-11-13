@@ -28,8 +28,7 @@ export class BenefitsManager {
     const totalBenefitsArray = this.calculateBenefits(date, orderedCategories);
     // 이벤트 체크
     const giveawayDiscount =
-      this.eventCheckManager.checkGiveawayEventDiscountAmount(sumAmount);
-
+      this.discountCalculator.calculateGiveawayDiscount(sumAmount);
     // 전체 혜택 합산
     const totalBenefits = {
       total: sumArray(totalBenefitsArray),

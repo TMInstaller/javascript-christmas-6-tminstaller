@@ -3,10 +3,12 @@ import { INPUT_MESSAGE } from "./constants/message.js";
 import InputView from "./InputView.js";
 import OutputView from "./OutputView.js";
 import { EventCheckManager } from "./managers/EventCheckManager.js";
+import { DiscountCalculator } from "./calculators/DiscountCalculator.js";
 
 class App {
   constructor() {
     this.eventCheckManager = new EventCheckManager();
+    this.discountCalculator = new DiscountCalculator();
   }
 
   async run() {
@@ -14,7 +16,7 @@ class App {
     const dateToVisit = await InputView.readVisitDate();
     const orderedMenu = await InputView.readMenu();
     const amountBeforeDiscount =
-      this.eventCheckManager.isTotalAmountOverMinimum(orderedMenu);
+      this.discountCalculator.calculateTotalAmount(orderedMenu);
     const orderedCategories =
       this.eventCheckManager.checkHowManyMenuInCategory(orderedMenu);
     OutputView.printOrderedMenu(orderedMenu);

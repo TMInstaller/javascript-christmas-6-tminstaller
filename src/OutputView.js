@@ -149,7 +149,7 @@ const OutputView = {
   },
   printGiveawayDiscountAmount(sumAmount) {
     const giveawayDiscountAmount =
-      eventCheckManager.checkGiveawayEventDiscountAmount(sumAmount);
+      discountCalculator.calculateGiveawayDiscount(sumAmount);
     if (checkIsNotZero(giveawayDiscountAmount)) {
       Console.print(
         `${EVENT_NAME.giveaway}: -${convertNumberToKoreaMoney(

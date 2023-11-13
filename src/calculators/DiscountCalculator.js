@@ -1,3 +1,5 @@
+import { makeMatrixOrderedMenu } from "../utils/creation.js";
+
 export class DiscountCalculator {
   calculateChristmasDiscount(date) {
     if (date < 26) {
@@ -27,5 +29,26 @@ export class DiscountCalculator {
       return 1000;
     }
     return 0;
+  }
+  calculateGiveawayDiscount(price) {
+    if (price >= 120000) {
+      return 25000;
+    }
+    return 0;
+  }
+  calculateTotalAmount(matrixData) {
+    const orderedMenu = makeMatrixOrderedMenu();
+    // matrixData의 각 항목에 해당하는 가격을 찾아 합산
+    let countAmount = 0;
+    for (const [menuItem, quantity] of matrixData) {
+      const priceInfo = orderedMenu.find(
+        ([, koreanName]) => koreanName === menuItem
+      );
+      if (priceInfo) {
+        const price = priceInfo[3];
+        countAmount += price * quantity;
+      }
+    }
+    return countAmount;
   }
 }
