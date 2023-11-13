@@ -25,35 +25,32 @@ const benefitsManager = new BenefitsManager();
 const discountCalculator = new DiscountCalculator();
 
 const OutputView = {
+  // 기본 출력 메서드
   printDivideSection() {
     Console.print(EMPTY_LINE);
   },
-
   printError(error) {
     Console.print(error);
   },
-
   printNothing() {
     Console.print(NOTHING_CONVENTION);
   },
 
+  // 주문 및 가격 관련 출력
   printBenefitsIntro() {
     Console.print(BENEFITS_MESSAGE.introducePreview);
     this.printDivideSection();
   },
-
   printOrderedMenu(orderedMenu) {
     Console.print(BENEFITS_MESSAGE.orderedMenu);
     Console.print(convertMatrixItemToFormattedString(orderedMenu));
     this.printDivideSection();
   },
-
   printPriceBeforeDiscount(sumAmount) {
     Console.print(BENEFITS_MESSAGE.priceBeforeDiscount);
     Console.print(convertNumberToKoreaMoney(sumAmount));
     Console.print(EMPTY_LINE);
   },
-
   printSatisfiedGiveAwayMenu(sumAmount) {
     Console.print(BENEFITS_MESSAGE.giveawayMenu);
     if (sumAmount < EVENT.giveaway) {
@@ -64,48 +61,15 @@ const OutputView = {
     }
     Console.print(EMPTY_LINE);
   },
+
+  // 할인 및 이벤트 관련 출력
   printBenefitsItems(date, orderedCategories) {
     this.printChristmasDiscountAmount(date);
     this.printWeekdaysDiscountAmount(date, orderedCategories);
     this.printWeekendsDiscountAmount(date, orderedCategories);
     this.printSpecialDiscountAmount(date);
   },
-  // TODO: 추가 모듈화 해보기
-  printBenefits(date, sumAmount, orderedCategories) {
-    Console.print(BENEFITS_MESSAGE.benefits);
-    this.printBenefitsWhenIsUnderAmount(sumAmount);
-    if (checkIsOver(sumAmount, EVENT.minimumAmount)) {
-      const totalBenefitsPrice = this.printBenefitsWhenIsOverAmount(
-        date,
-        sumAmount,
-        orderedCategories
-      );
-      return totalBenefitsPrice;
-    }
-    Console.print(EMPTY_LINE);
-    return 0;
-  },
-  printBenefitsWhenIsOverAmount(date, sumAmount, orderedCategories) {
-    this.printBenefitsItems(date, orderedCategories);
-    const totalBenefitsArray = benefitsManager.calculateBenefits(
-      date,
-      orderedCategories
-    );
-    const giveawayDiscountAmount = this.printGiveawayDiscountAmount(sumAmount);
-    const totalBenefitsPrice = {
-      total: sumArray(totalBenefitsArray),
-      giveaway: giveawayDiscountAmount,
-    };
-    Console.print(EMPTY_LINE);
-    return totalBenefitsPrice;
-  },
-  printBenefitsWhenIsUnderAmount(sumAmount) {
-    if (checkIsUnder(sumAmount, EVENT.minimumAmount)) {
-      Console.print(NOTHING_CONVENTION);
-    }
-  },
   printChristmasDiscountAmount(date) {
-    // 크리스마스 조건문
     const christmasDiscountAmount =
       discountCalculator.calculateChristmasDiscount(date);
     if (checkIsPositiveNumber(christmasDiscountAmount)) {
@@ -168,6 +132,43 @@ const OutputView = {
     }
     return giveawayDiscountAmount;
   },
+
+  // 혜택 관련 출력
+  printBenefitsWhenIsUnderAmount(sumAmount) {
+    if (checkIsUnder(sumAmount, EVENT.minimumAmount)) {
+      Console.print(NOTHING_CONVENTION);
+    }
+  },
+  printBenefitsWhenIsOverAmount(date, sumAmount, orderedCategories) {
+    this.printBenefitsItems(date, orderedCategories);
+    const totalBenefitsArray = benefitsManager.calculateBenefits(
+      date,
+      orderedCategories
+    );
+    const giveawayDiscountAmount = this.printGiveawayDiscountAmount(sumAmount);
+    const totalBenefitsPrice = {
+      total: sumArray(totalBenefitsArray),
+      giveaway: giveawayDiscountAmount,
+    };
+    Console.print(EMPTY_LINE);
+    return totalBenefitsPrice;
+  },
+  printBenefits(date, sumAmount, orderedCategories) {
+    Console.print(BENEFITS_MESSAGE.benefits);
+    this.printBenefitsWhenIsUnderAmount(sumAmount);
+    if (checkIsOver(sumAmount, EVENT.minimumAmount)) {
+      const totalBenefitsPrice = this.printBenefitsWhenIsOverAmount(
+        date,
+        sumAmount,
+        orderedCategories
+      );
+      return totalBenefitsPrice;
+    }
+    Console.print(EMPTY_LINE);
+    return 0;
+  },
+
+  // 최종 결과 출력
   printTotalBenefitsPrice(totalBenefitsPrice) {
     Console.print(BENEFITS_MESSAGE.totalBenefitsPrice);
     if (checkIsTypeObject(totalBenefitsPrice)) {
@@ -178,7 +179,6 @@ const OutputView = {
     }
     Console.print(EMPTY_LINE);
   },
-
   printPriceAfterDiscount(priceBeforeDiscount, totalBenefitsPrice) {
     Console.print(BENEFITS_MESSAGE.priceAfterDiscount);
     if (checkIsTypeObject(totalBenefitsPrice)) {
@@ -192,12 +192,10 @@ const OutputView = {
     }
     Console.print(EMPTY_LINE);
   },
-
   printSatisfiedEventBadge(totalBenefitsPrice) {
     Console.print(BENEFITS_MESSAGE.eventBadge);
     const totalBenefits =
       totalBenefitsPrice.total + totalBenefitsPrice.giveaway;
-
     if (
       checkIsTypeObject(totalBenefitsPrice) &&
       totalBenefits >= EVENT.starBadge
