@@ -14,7 +14,6 @@ export class MenuMatrix {
     this.#isMatrixHasOnlyBeverages(matrixData);
   }
 
-  // 배열 안에 들어있는 모든 수의 합이 20개를 넘는 지 확인
   #isTotalCountOverMaximum(matrixData) {
     let countAll = 0;
     for (const arrayData of matrixData) {
@@ -23,7 +22,6 @@ export class MenuMatrix {
     checkIsOverMaximum(countAll, MENU_COUNT.maximun);
   }
 
-  // TODO: 배열 내부에 중복되는 메뉴 이름이 있는지 확인
   #isMatrixHasDuplicates(matrixData) {
     let checkDuplicateSet = new Set();
     for (const arrayData of matrixData) {
@@ -33,7 +31,7 @@ export class MenuMatrix {
       checkDuplicateSet.add(arrayData[0]);
     }
   }
-  // TODO: 배열 내부에 음료만 존재하는지 확인
+
   #isMatrixHasOnlyBeverages(matrixData) {
     // 음료가 가지고 있는 이름들만 모아놓은 배열 생성
     const beveragesList = makeObjectValuesToArray(BEVERAGE);

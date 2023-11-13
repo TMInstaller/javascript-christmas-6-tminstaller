@@ -2,7 +2,6 @@ import { DiscountCalculator } from "../calculators/DiscountCalculator.js";
 import { sumArray } from "../utils/calculate.js";
 import { EventCheckManager } from "./EventCheckManager.js";
 
-// TODO: 완성시키고 적용할 것
 export class BenefitsManager {
   constructor() {
     this.discountCalculator = new DiscountCalculator();

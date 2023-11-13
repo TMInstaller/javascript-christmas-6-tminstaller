@@ -1,4 +1,3 @@
-// TODO: 순수하게 콘솔에 출력하는 기능만을 담당합니다.
 import { Console } from "@woowacourse/mission-utils";
 import { BENEFITS_MESSAGE, EMPTY_LINE } from "./constants/message.js";
 import { NOTHING_CONVENTION } from "./constants/convention.js";
