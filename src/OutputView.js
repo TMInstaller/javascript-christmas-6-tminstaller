@@ -1,5 +1,9 @@
 import { Console } from "@woowacourse/mission-utils";
-import { BENEFITS_MESSAGE, EMPTY_LINE } from "./constants/message.js";
+import {
+  BENEFITS_MESSAGE,
+  EMPTY_LINE,
+  INPUT_MESSAGE,
+} from "./constants/message.js";
 import { NOTHING_CONVENTION } from "./constants/convention.js";
 import { EVENT_NAME } from "./constants/word.js";
 import {
@@ -33,6 +37,11 @@ const OutputView = {
   },
   printNothing() {
     Console.print(NOTHING_CONVENTION);
+  },
+
+  // 시작 메세지 출력 메서드
+  printStartMessage() {
+    Console.print(INPUT_MESSAGE.introducePlanner);
   },
 
   // 주문 및 가격 관련 출력

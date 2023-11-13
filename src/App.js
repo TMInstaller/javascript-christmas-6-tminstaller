@@ -1,5 +1,3 @@
-import { Console } from "@woowacourse/mission-utils";
-import { INPUT_MESSAGE } from "./constants/message.js";
 import InputView from "./InputView.js";
 import OutputView from "./OutputView.js";
 import { EventCheckManager } from "./managers/EventCheckManager.js";
@@ -12,7 +10,7 @@ class App {
   }
 
   async run() {
-    Console.print(INPUT_MESSAGE.introducePlanner);
+    OutputView.printStartMessage();
     const dateToVisit = await InputView.readVisitDate();
     const orderedMenu = await InputView.readMenu();
     const amountBeforeDiscount =
