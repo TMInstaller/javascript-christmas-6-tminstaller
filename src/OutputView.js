@@ -13,6 +13,7 @@ import {
   checkIsPositiveNumber,
   checkIsTypeObject,
 } from "./utils/condition.js";
+import { sumArray } from "./utils/calculate.js";
 
 const eventCheckManager = new EventCheckManager();
 
@@ -124,13 +125,14 @@ const OutputView = {
 
       // 여기에 혜택금액 합과 증정 혜택금액을 return
       // TODO: 이부분도 모듈화
-      const totalBenefits =
-        christmasDiscountAmount +
-        weekdaysDiscountAmount +
-        weekendsDiscountAmount +
-        specialDiscountAmount;
+      const totalBenefitsArray = [
+        christmasDiscountAmount,
+        weekdaysDiscountAmount,
+        weekendsDiscountAmount,
+        specialDiscountAmount,
+      ];
       const totalBenefitsPrice = {
-        total: totalBenefits,
+        total: sumArray(totalBenefitsArray),
         giveaway: giveawayDiscountAmount,
       };
       Console.print(EMPTY_LINE);
@@ -165,22 +167,17 @@ const OutputView = {
     Console.print(EMPTY_LINE);
   },
 
-  // TODO: 모듈화하기
   printSatisfiedEventBadge(totalBenefitsPrice) {
     Console.print(BENEFITS_MESSAGE.eventBadge);
     const totalBenefits =
       totalBenefitsPrice.total + totalBenefitsPrice.giveaway;
+
     if (
       checkIsTypeObject(totalBenefitsPrice) &&
       totalBenefits >= EVENT.starBadge
     ) {
-      if (totalBenefits >= 20000) {
-        Console.print("산타");
-      } else if (totalBenefits >= 10000) {
-        Console.print("트리");
-      } else if (totalBenefits >= 5000) {
-        Console.print("별");
-      }
+      const badgeToTake = eventCheckManager.checkBadgeToTake(totalBenefits);
+      Console.print(badgeToTake);
     } else {
       Console.print(NOTHING_CONVENTION);
     }
