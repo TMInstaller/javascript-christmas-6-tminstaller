@@ -17,9 +17,7 @@ export const makeObjectValuesToArray = (objectData) => {
 };
 
 export const makeObjectToArray = (objectData) => {
-  return Object.values(objectData).flatMap((category) =>
-    Object.entries(category).flatMap(([key, value]) => [[key, value]])
-  );
+  return Object.keys(objectData).map((key) => [key, objectData[key]]);
 };
 
 export const convertNumberToKoreaMoney = (numberData) => {
