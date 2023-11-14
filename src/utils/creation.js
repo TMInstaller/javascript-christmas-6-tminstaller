@@ -28,6 +28,5 @@ export const createCategoryCounts = (orderedMenu, matrixOrderedMenu) => {
       );
     }
   }
-  console.log(categoryCounts);
   return categoryCounts;
 };
