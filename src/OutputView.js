@@ -215,6 +215,32 @@ const OutputView = {
     }
     Console.print(EMPTY_LINE);
   },
+  printResults(resultsData) {
+    this.printOrderDetails(resultsData);
+    const totalBenefitsPrice = this.printBenefitsDetails(resultsData);
+    this.printFinalResults(resultsData, totalBenefitsPrice);
+  },
+  printOrderDetails({ orderedMenu, amountBeforeDiscount }) {
+    this.printOrderedMenu(orderedMenu);
+    this.printPriceBeforeDiscount(amountBeforeDiscount);
+    this.printSatisfiedGiveAwayMenu(amountBeforeDiscount);
+  },
+  printBenefitsDetails({
+    dateToVisit,
+    amountBeforeDiscount,
+    orderedCategories,
+  }) {
+    return this.printBenefits(
+      dateToVisit,
+      amountBeforeDiscount,
+      orderedCategories
+    );
+  },
+  printFinalResults({ amountBeforeDiscount }, totalBenefitsPrice) {
+    this.printTotalBenefitsPrice(totalBenefitsPrice);
+    this.printPriceAfterDiscount(amountBeforeDiscount, totalBenefitsPrice);
+    this.printSatisfiedEventBadge(totalBenefitsPrice);
+  },
 };
 
 export default OutputView;
