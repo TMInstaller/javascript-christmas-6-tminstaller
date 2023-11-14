@@ -1,7 +1,7 @@
 export const increaseOrMaintain = (value, numberData) => {
   if (value) {
-    return (value += numberData);
+    return value + numberData;
   } else {
-    return (value = numberData);
+    return numberData;
   }
 };

@@ -22,14 +22,22 @@ describe("makeMatrixOrderedMenu 함수 테스트", () => {
 });
 
 describe("createCategoryCounts 함수 테스트", () => {
-  test("주문된 메뉴를 바탕으로 카테고리별 수량을 계산한다", () => {
+  const matrixOrderedMenu = makeMatrixOrderedMenu();
+
+  test("주문된 메뉴에 따라 카테고리별 수량을 정확하게 계산한다", () => {
     const orderedMenu = [
-      ["시저샐러드", 2],
+      ["레드와인", 2],
       ["제로콜라", 3],
     ];
-    const matrixOrderedMenu = makeMatrixOrderedMenu();
     const categoryCounts = createCategoryCounts(orderedMenu, matrixOrderedMenu);
 
-    expect(categoryCounts).toBeInstanceOf(Object);
+    expect(categoryCounts["BEVERAGE"]).toBe(5);
+  });
+
+  test("주문된 메뉴에 없는 항목은 카테고리별 수량 계산에 영향을 주지 않는다", () => {
+    const orderedMenu = [["칠성사이다", 1]];
+    const categoryCounts = createCategoryCounts(orderedMenu, matrixOrderedMenu);
+
+    expect(categoryCounts["음료"]).toBeUndefined();
   });
 });

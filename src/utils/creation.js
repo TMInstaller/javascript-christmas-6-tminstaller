@@ -22,8 +22,12 @@ export const createCategoryCounts = (orderedMenu, matrixOrderedMenu) => {
     );
     if (itemEntry) {
       const category = itemEntry[0];
-      increaseOrMaintain(categoryCounts[category], quantity);
+      categoryCounts[category] = increaseOrMaintain(
+        categoryCounts[category],
+        quantity
+      );
     }
   }
+  console.log(categoryCounts);
   return categoryCounts;
 };
