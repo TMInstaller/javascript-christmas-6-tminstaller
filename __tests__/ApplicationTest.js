@@ -67,12 +67,118 @@ describe("기능 테스트", () => {
 
     expectLogContains(getOutput(logSpy), expected);
   });
+
+  test("크리스마스 할인 출력", async () => {
+    // given
+    const logSpy = getLogSpy();
+    mockQuestions(["25", "해산물파스타-2,레드와인-1,초코케이크-1"]);
+
+    // when
+    const app = new App();
+    await app.run();
+
+    // then
+    const expected = ["크리스마스 디데이 할인: -3,400원"];
+
+    expectLogContains(getOutput(logSpy), expected);
+  });
+
+  test("평일 할인 출력", async () => {
+    // given
+    const logSpy = getLogSpy();
+    mockQuestions(["5", "해산물파스타-2,레드와인-1,초코케이크-1"]);
+
+    // when
+    const app = new App();
+    await app.run();
+
+    // then
+    const expected = ["평일 할인: -2,023원"];
+
+    expectLogContains(getOutput(logSpy), expected);
+  });
+
+  test("주말 할인 출력", async () => {
+    // given
+    const logSpy = getLogSpy();
+    mockQuestions(["2", "해산물파스타-2,레드와인-1,초코케이크-1"]);
+
+    // when
+    const app = new App();
+    await app.run();
+
+    // then
+    const expected = ["주말 할인: -4,046원"];
+
+    expectLogContains(getOutput(logSpy), expected);
+  });
+
+  test("특별 할인 출력", async () => {
+    // given
+    const logSpy = getLogSpy();
+    mockQuestions(["10", "해산물파스타-2,레드와인-1,초코케이크-1"]);
+
+    // when
+    const app = new App();
+    await app.run();
+
+    // then
+    const expected = ["특별 할인: -1,000원"];
+
+    expectLogContains(getOutput(logSpy), expected);
+  });
+
+  test("산타 배지 출력", async () => {
+    // given
+    const logSpy = getLogSpy();
+    mockQuestions(["10", "해산물파스타-2,레드와인-1,초코케이크-1"]);
+
+    // when
+    const app = new App();
+    await app.run();
+
+    // then
+    const expected = ["<12월 이벤트 배지>" + LINE_SEPARATOR + "산타"];
+
+    expectLogContains(getOutput(logSpy), expected);
+  });
+
+  test("트리 배지 출력", async () => {
+    // given
+    const logSpy = getLogSpy();
+    mockQuestions(["23", "크리스마스파스타-4,제로콜라-1"]);
+
+    // when
+    const app = new App();
+    await app.run();
+
+    // then
+    const expected = ["<12월 이벤트 배지>" + LINE_SEPARATOR + "트리"];
+
+    expectLogContains(getOutput(logSpy), expected);
+  });
+
+  test("별 배지 출력", async () => {
+    // given
+    const logSpy = getLogSpy();
+    mockQuestions(["23", "크리스마스파스타-1,제로콜라-4"]);
+
+    // when
+    const app = new App();
+    await app.run();
+
+    // then
+    const expected = ["<12월 이벤트 배지>" + LINE_SEPARATOR + "별"];
+
+    expectLogContains(getOutput(logSpy), expected);
+  });
 });
 
 describe("예외 테스트", () => {
   test("날짜 예외 테스트", async () => {
     // given
-    const INVALID_DATE_MESSAGE = "[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.";
+    const INVALID_DATE_MESSAGE =
+      "[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.";
     const INPUTS_TO_END = ["1", "해산물파스타-2"];
     const logSpy = getLogSpy();
     mockQuestions(["a", ...INPUTS_TO_END]);
@@ -82,12 +188,15 @@ describe("예외 테스트", () => {
     await app.run();
 
     // then
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(INVALID_DATE_MESSAGE));
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.stringContaining(INVALID_DATE_MESSAGE)
+    );
   });
 
   test("주문 예외 테스트", async () => {
     // given
-    const INVALID_ORDER_MESSAGE = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.";
+    const INVALID_ORDER_MESSAGE =
+      "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.";
     const INPUTS_TO_END = ["해산물파스타-2"];
     const logSpy = getLogSpy();
     mockQuestions(["3", "제로콜라-a", ...INPUTS_TO_END]);
@@ -97,6 +206,8 @@ describe("예외 테스트", () => {
     await app.run();
 
     // then
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(INVALID_ORDER_MESSAGE));
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.stringContaining(INVALID_ORDER_MESSAGE)
+    );
   });
 });
