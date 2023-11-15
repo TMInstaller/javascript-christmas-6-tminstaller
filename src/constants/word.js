@@ -43,3 +43,9 @@ export const FULL_MENU = Object.freeze({
   DESSERT,
   BEVERAGE,
 });
+
+export const BADGE_NAME = Object.freeze({
+  santa: "산타",
+  tree: "트리",
+  star: "별",
+});

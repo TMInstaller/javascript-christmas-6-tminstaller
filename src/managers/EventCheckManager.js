@@ -1,3 +1,5 @@
+import { EVENT } from "../constants/number.js";
+import { BADGE_NAME } from "../constants/word.js";
 import {
   createCategoryCounts,
   makeMatrixOrderedMenu,
@@ -11,12 +13,12 @@ export class EventCheckManager {
   }
 
   checkBadgeToTake(totalBenefits) {
-    if (totalBenefits >= 20000) {
-      return "산타";
-    } else if (totalBenefits >= 10000) {
-      return "트리";
-    } else if (totalBenefits >= 5000) {
-      return "별";
+    if (totalBenefits >= EVENT.santaBadge) {
+      return BADGE_NAME.santa;
+    } else if (totalBenefits >= EVENT.treeBadge) {
+      return BADGE_NAME.tree;
+    } else if (totalBenefits >= EVENT.starBadge) {
+      return BADGE_NAME.star;
     }
   }
 }
