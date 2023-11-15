@@ -1,4 +1,5 @@
 import { DIVIDE_CONVENTION } from "../constants/convention.js";
+import { ThrowManager } from "../managers/ThrowManager.js";
 import { checkIsEmpty, checkIsIncluded } from "../utils/condition.js";
 import { divideData } from "../utils/conversion.js";
 
@@ -12,13 +13,17 @@ export class MenuUnprocessed {
   }
 
   #isDataEmpty(stringData) {
-    checkIsEmpty(stringData);
+    if (checkIsEmpty(stringData)) {
+      ThrowManager.emptyError();
+    }
   }
 
   #isDataHasCorrectStructure(stringData) {
     const items = divideData(stringData, DIVIDE_CONVENTION.menu);
     for (const item of items) {
-      checkIsIncluded(item, DIVIDE_CONVENTION.nameAndCount);
+      if (checkIsIncluded(item, DIVIDE_CONVENTION.nameAndCount)) {
+        ThrowManager.includedError();
+      }
     }
   }
 }

@@ -1,34 +1,23 @@
 import { ThrowManager } from "../managers/ThrowManager.js";
 
+// self-feedback: 뭔가 이름과 return값이 안맞는 것들이 존재한다..
 export const checkIsEmpty = (data) => {
-  if (!data?.trim().length) {
-    ThrowManager.emptyError();
-  }
+  return !data?.trim().length;
 };
 export const checkIsInteger = (data) => {
-  if (!Number.isInteger(data)) {
-    ThrowManager.integerError();
-  }
+  return !Number.isInteger(data);
 };
-export const checkIsNumber = (data, errMessage) => {
-  if (isNaN(data) || data === null) {
-    ThrowManager.numberError(errMessage);
-  }
+export const checkIsNumber = (data) => {
+  return isNaN(data) || data === null;
 };
 export const checkIsOverMaximum = (data, maxNumber) => {
-  if (data > maxNumber) {
-    ThrowManager.overMaximumError();
-  }
+  return data > maxNumber;
 };
 export const checkIsUnderMinimum = (data, minNumber) => {
-  if (data < minNumber) {
-    ThrowManager.underMinimumError();
-  }
+  return data < minNumber;
 };
 export const checkIsIncluded = (data, element) => {
-  if (!data?.includes(element)) {
-    ThrowManager.includedError();
-  }
+  return !data?.includes(element);
 };
 
 export const checkIsPositiveNumber = (data) => {

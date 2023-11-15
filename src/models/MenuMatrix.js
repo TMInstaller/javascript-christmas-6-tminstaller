@@ -20,7 +20,9 @@ export class MenuMatrix {
     for (const arrayData of matrixData) {
       countAll += arrayData[1];
     }
-    checkIsOverMaximum(countAll, MENU_COUNT.maximun);
+    if (checkIsOverMaximum(countAll, MENU_COUNT.maximun)) {
+      ThrowManager.overMaximumError();
+    }
   }
 
   #isMatrixHasDuplicates(matrixData) {

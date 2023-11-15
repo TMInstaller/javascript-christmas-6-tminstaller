@@ -14,123 +14,119 @@ import {
 } from "../../src/utils/condition";
 
 describe("checkIsEmpty 함수 테스트", () => {
-  test("빈 문자열이 입력되면 에러가 발생한다", () => {
-    expect(() => checkIsEmpty("")).toThrow(ERROR_CONVENTION);
+  test("빈 문자열이 입력되면 true를 반환한다", () => {
+    expect(checkIsEmpty("")).toBe(true);
   });
 
-  test("공백만 있는 문자열이 입력되면 에러가 발생한다", () => {
-    expect(() => checkIsEmpty("   ")).toThrow(ERROR_CONVENTION);
+  test("공백만 있는 문자열이 입력되면 true를 반환한다", () => {
+    expect(checkIsEmpty("   ")).toBe(true);
   });
 
-  test("정상적인 문자열이 입력되면 에러가 발생하지 않는다", () => {
-    expect(() => checkIsEmpty("Hello World")).not.toThrow();
+  test("정상적인 문자열이 입력되면 false를 반환한다", () => {
+    expect(checkIsEmpty("Hello World")).toBe(false);
   });
 
-  test("null이 입력되면 에러가 발생한다", () => {
-    expect(() => checkIsEmpty(null)).toThrow(ERROR_CONVENTION);
+  test("null이 입력되면 true를 반환한다", () => {
+    expect(checkIsEmpty(null)).toBe(true);
   });
 
-  test("undefined가 입력되면 에러가 발생한다", () => {
-    expect(() => checkIsEmpty(undefined)).toThrow(ERROR_CONVENTION);
+  test("undefined가 입력되면 true를 반환한다", () => {
+    expect(checkIsEmpty(undefined)).toBe(true);
+  });
+});
+
+describe("checkIsInteger 함수 테스트", () => {
+  test("정수가 입력되면 false를 반환한다", () => {
+    expect(checkIsInteger(10)).toBe(false);
+  });
+
+  test("소수가 입력되면 true를 반환한다", () => {
+    expect(checkIsInteger(10.5)).toBe(true);
+  });
+
+  test("숫자가 아닌 값이 입력되면 true를 반환한다", () => {
+    expect(checkIsInteger("abc")).toBe(true);
+    expect(checkIsInteger({})).toBe(true);
+  });
+
+  test("null이 입력되면 true를 반환한다", () => {
+    expect(checkIsInteger(null)).toBe(true);
+  });
+
+  test("undefined가 입력되면 true를 반환한다", () => {
+    expect(checkIsInteger(undefined)).toBe(true);
   });
 });
 
 describe("checkIsNumber 함수 테스트", () => {
-  const errorMessage = ERROR_CONVENTION;
-
-  test("숫자 형태의 문자열이 입력되면 에러가 발생하지 않는다", () => {
-    expect(() => checkIsNumber("123", errorMessage)).not.toThrow();
+  test("숫자 형태의 문자열이 입력되면 false를 반환한다", () => {
+    expect(checkIsNumber("123")).toBe(false);
   });
 
-  test("숫자가 입력되면 에러가 발생하지 않는다", () => {
-    expect(() => checkIsNumber(123, errorMessage)).not.toThrow();
+  test("숫자가 입력되면 false를 반환한다", () => {
+    expect(checkIsNumber(123)).toBe(false);
   });
 
-  test("숫자가 아닌 문자열이 입력되면 에러가 발생한다", () => {
-    expect(() => checkIsNumber("abc", errorMessage)).toThrow(errorMessage);
+  test("숫자가 아닌 문자열이 입력되면 true를 반환한다", () => {
+    expect(checkIsNumber("abc")).toBe(true);
   });
 
-  test("null이 입력되면 에러가 발생한다", () => {
-    expect(() => checkIsNumber(null, errorMessage)).toThrow(errorMessage);
+  test("null이 입력되면 true를 반환한다", () => {
+    expect(checkIsNumber(null)).toBe(true);
   });
 
-  test("undefined가 입력되면 에러가 발생한다", () => {
-    expect(() => checkIsNumber(undefined, errorMessage)).toThrow(errorMessage);
-  });
-});
-
-describe("checkIsUnderMinimum 함수 테스트", () => {
-  const minimumNumber = 10;
-
-  test("data가 minNumber보다 작으면 에러가 발생한다", () => {
-    expect(() => checkIsUnderMinimum(5, minimumNumber)).toThrow(
-      ERROR_CONVENTION
-    );
-  });
-
-  test("data가 minNumber와 같으면 에러가 발생하지 않는다", () => {
-    expect(() => checkIsUnderMinimum(10, minimumNumber)).not.toThrow();
-  });
-
-  test("data가 minNumber보다 크면 에러가 발생하지 않는다", () => {
-    expect(() => checkIsUnderMinimum(15, minimumNumber)).not.toThrow();
+  test("undefined가 입력되면 true를 반환한다", () => {
+    expect(checkIsNumber(undefined)).toBe(true);
   });
 });
 
 describe("checkIsOverMaximum 함수 테스트", () => {
   const maxNumber = 10;
 
-  test("data가 maxNumber보다 크면 에러가 발생한다", () => {
-    expect(() => checkIsOverMaximum(15, maxNumber)).toThrow(ERROR_CONVENTION);
+  test("data가 maxNumber보다 크면 true를 반환한다", () => {
+    expect(checkIsOverMaximum(15, maxNumber)).toBe(true);
   });
 
-  test("data가 maxNumber와 같으면 에러가 발생하지 않는다", () => {
-    expect(() => checkIsOverMaximum(10, maxNumber)).not.toThrow();
+  test("data가 maxNumber와 같으면 false를 반환한다", () => {
+    expect(checkIsOverMaximum(10, maxNumber)).toBe(false);
   });
 
-  test("data가 maxNumber보다 작으면 에러가 발생하지 않는다", () => {
-    expect(() => checkIsOverMaximum(5, maxNumber)).not.toThrow();
+  test("data가 maxNumber보다 작으면 false를 반환한다", () => {
+    expect(checkIsOverMaximum(5, maxNumber)).toBe(false);
   });
 });
 
-describe("checkIsInteger 함수 테스트", () => {
-  test("정수가 입력되면 에러가 발생하지 않는다", () => {
-    expect(() => checkIsInteger(10)).not.toThrow();
+describe("checkIsUnderMinimum 함수 테스트", () => {
+  const minimumNumber = 10;
+
+  test("data가 minNumber보다 작으면 true를 반환한다", () => {
+    expect(checkIsUnderMinimum(5, minimumNumber)).toBe(true);
   });
 
-  test("소수가 입력되면 에러가 발생한다", () => {
-    expect(() => checkIsInteger(10.5)).toThrow(ERROR_CONVENTION);
+  test("data가 minNumber와 같으면 false를 반환한다", () => {
+    expect(checkIsUnderMinimum(10, minimumNumber)).toBe(false);
   });
 
-  test("숫자가 아닌 값이 입력되면 에러가 발생한다", () => {
-    expect(() => checkIsInteger("abc")).toThrow(ERROR_CONVENTION);
-    expect(() => checkIsInteger({})).toThrow(ERROR_CONVENTION);
-  });
-
-  test("null이 입력되면 에러가 발생한다", () => {
-    expect(() => checkIsInteger(null)).toThrow(ERROR_CONVENTION);
-  });
-
-  test("undefined가 입력되면 에러가 발생한다", () => {
-    expect(() => checkIsInteger(undefined)).toThrow(ERROR_CONVENTION);
+  test("data가 minNumber보다 크면 false를 반환한다", () => {
+    expect(checkIsUnderMinimum(15, minimumNumber)).toBe(false);
   });
 });
 
 describe("checkIsIncluded 함수 테스트", () => {
   const array = [1, 2, 3, 4, 5];
 
-  test("배열에 요소가 포함되어 있으면 에러가 발생하지 않는다", () => {
-    expect(() => checkIsIncluded(array, 3)).not.toThrow();
+  test("배열에 요소가 포함되어 있으면 false를 반환한다", () => {
+    expect(checkIsIncluded(array, 3)).toBe(false);
   });
 
-  test("배열에 요소가 포함되어 있지 않으면 에러가 발생한다", () => {
-    expect(() => checkIsIncluded(array, 6)).toThrow(ERROR_CONVENTION);
+  test("배열에 요소가 포함되어 있지 않으면 true를 반환한다", () => {
+    expect(checkIsIncluded(array, 6)).toBe(true);
   });
 
-  test("data가 배열이 아니면 에러가 발생한다", () => {
-    expect(() => checkIsIncluded("not an array", 1)).toThrow(ERROR_CONVENTION);
-    expect(() => checkIsIncluded(null, 1)).toThrow(ERROR_CONVENTION);
-    expect(() => checkIsIncluded(undefined, 1)).toThrow(ERROR_CONVENTION);
+  test("data가 배열이 아니면 true를 반환한다", () => {
+    expect(checkIsIncluded("not an array", 1)).toBe(true);
+    expect(checkIsIncluded(null, 1)).toBe(true);
+    expect(checkIsIncluded(undefined, 1)).toBe(true);
   });
 });
 

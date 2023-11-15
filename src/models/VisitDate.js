@@ -1,6 +1,7 @@
 import OutputView from "../OutputView.js";
 import { ERROR_MESSAGE } from "../constants/error.js";
 import { EVENT } from "../constants/number.js";
+import { ThrowManager } from "../managers/ThrowManager.js";
 import {
   checkIsEmpty,
   checkIsInteger,
@@ -23,26 +24,38 @@ export class VisitDate {
   }
 
   #isDataEmpty(stringData) {
-    checkIsEmpty(stringData);
+    if (checkIsEmpty(stringData)) {
+      ThrowManager.emptyError();
+    }
   }
 
   #isDataNumber(stringData) {
     try {
-      checkIsNumber(stringData, ERROR_MESSAGE.isInvalidDate);
+      if (checkIsNumber(stringData)) {
+        ThrowManager.numberError(ERROR_MESSAGE.isInvalidDate);
+      }
     } catch (error) {
       OutputView.printError(error.message);
     }
   }
 
   #isDataUnderMinimum(stringData) {
-    checkIsUnderMinimum(stringToNumber(stringData), EVENT.startDate);
+    const [data, minNumber] = [stringToNumber(stringData), EVENT.startDate];
+    if (checkIsUnderMinimum(data, minNumber)) {
+      ThrowManager.underMinimumError();
+    }
   }
 
   #isDataOverMaximum(stringData) {
-    checkIsOverMaximum(stringToNumber(stringData), EVENT.endDate);
+    const [data, maxNumber] = [stringToNumber(stringData), EVENT.endDate];
+    if (checkIsOverMaximum(data, maxNumber)) {
+      ThrowManager.overMaximumError();
+    }
   }
 
   #isDataInteger(stringData) {
-    checkIsInteger(stringToNumber(stringData));
+    if (checkIsInteger(stringToNumber(stringData))) {
+      ThrowManager.integerError();
+    }
   }
 }

@@ -1,6 +1,7 @@
 import OutputView from "../OutputView.js";
 import { ERROR_MESSAGE } from "../constants/error.js";
 import { MENU_COUNT } from "../constants/number.js";
+import { ThrowManager } from "../managers/ThrowManager.js";
 import {
   checkIsEmpty,
   checkIsInteger,
@@ -23,26 +24,38 @@ export class MenuCount {
   }
 
   #isDataEmpty(stringData) {
-    checkIsEmpty(stringData);
+    if (checkIsEmpty(stringData)) {
+      ThrowManager.emptyError();
+    }
   }
 
   #isDataNumber(stringData) {
     try {
-      checkIsNumber(stringData, ERROR_MESSAGE.isInvalidOrder);
+      if (checkIsNumber(stringData)) {
+        ThrowManager.numberError(ERROR_MESSAGE.isInvalidOrder);
+      }
     } catch (error) {
       OutputView.printError(error.message);
     }
   }
 
   #isDataUnderMinimum(stringData) {
-    checkIsUnderMinimum(stringToNumber(stringData), MENU_COUNT.minimum);
+    const [data, minNumber] = [stringToNumber(stringData), MENU_COUNT.minimum];
+    if (checkIsUnderMinimum(data, minNumber)) {
+      ThrowManager.underMinimumError();
+    }
   }
 
   #isDataOverMaximum(stringData) {
-    checkIsOverMaximum(stringToNumber(stringData), MENU_COUNT.maximun);
+    const [data, maxNumber] = [stringToNumber(stringData), MENU_COUNT.maximun];
+    if (checkIsOverMaximum(data, maxNumber)) {
+      ThrowManager.overMaximumError();
+    }
   }
 
   #isDataInteger(stringData) {
-    checkIsInteger(stringToNumber(stringData));
+    if (checkIsInteger(stringToNumber(stringData))) {
+      ThrowManager.integerError();
+    }
   }
 }
