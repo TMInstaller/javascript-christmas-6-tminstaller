@@ -1,4 +1,4 @@
-import { BENEFITS, CHRISTMAS_D_DAY } from "../constants/number.js";
+import { BENEFITS, CHRISTMAS_D_DAY, EVENT_DATE } from "../constants/number.js";
 import { EventCheckManager } from "../managers/EventCheckManager.js";
 import { checkIsOver } from "../utils/condition.js";
 import { makeMatrixOrderableMenu } from "../utils/creation.js";
@@ -17,26 +17,23 @@ export class DiscountCalculator {
     return BENEFITS.none;
   }
   calculateWeekdaysDiscount(date, orderedCategories) {
-    const weekDays = [
-      3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28,
-      31,
-    ];
-    if (weekDays.includes(date) && !isNaN(orderedCategories.DESSERT)) {
+    if (
+      EVENT_DATE.weekdays.includes(date) &&
+      !isNaN(orderedCategories.DESSERT)
+    ) {
       const weekdaysDisocunt = BENEFITS.dayOfWeek * orderedCategories.DESSERT;
       return weekdaysDisocunt;
     }
     return BENEFITS.none;
   }
   calculateWeekendsDiscount(date, orderedCategories) {
-    const specialDays = [1, 2, 8, 9, 15, 16, 22, 23, 29, 30];
-    if (specialDays.includes(date) && !isNaN(orderedCategories.MAIN)) {
+    if (EVENT_DATE.weekends.includes(date) && !isNaN(orderedCategories.MAIN)) {
       return BENEFITS.dayOfWeek * orderedCategories.MAIN;
     }
     return BENEFITS.none;
   }
   calculateSpecialDiscount(date) {
-    const specialDays = [3, 10, 17, 24, 25, 31];
-    if (specialDays.includes(date)) {
+    if (EVENT_DATE.specialDays.includes(date)) {
       return BENEFITS.special;
     }
     return BENEFITS.none;
