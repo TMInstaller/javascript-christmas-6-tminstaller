@@ -1,4 +1,3 @@
-import { ERROR_MESSAGE } from "../constants/error.js";
 import { MENU_COUNT } from "../constants/number.js";
 import { BEVERAGE } from "../constants/word.js";
 import { ThrowManager } from "../managers/ThrowManager.js";
