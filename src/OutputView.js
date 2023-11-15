@@ -18,6 +18,7 @@ import {
   checkIsPositiveNumber,
   checkIsTypeObject,
   checkIsUnder,
+  checkIsUnderMinimum,
 } from "./utils/condition.js";
 import { sumArray } from "./utils/calculate.js";
 import { DiscountCalculator } from "./calculators/DiscountCalculator.js";
@@ -61,10 +62,10 @@ const OutputView = {
   },
   printSatisfiedGiveAwayMenu(sumAmount) {
     Console.print(BENEFITS_MESSAGE.giveawayMenu);
-    if (sumAmount < EVENT.giveaway) {
+    if (checkIsUnderMinimum(sumAmount, EVENT.giveaway)) {
       Console.print(NOTHING_CONVENTION);
     }
-    if (sumAmount >= EVENT.giveaway) {
+    if (checkIsOver(sumAmount, EVENT.giveaway)) {
       Console.print(BENEFITS_MESSAGE.giveawayGoods);
     }
     Console.print(EMPTY_LINE);
@@ -80,12 +81,9 @@ const OutputView = {
   printChristmasDiscountAmount(date) {
     const christmasDiscountAmount =
       discountCalculator.calculateChristmasDiscount(date);
+    const koreaMoney = convertNumberToKoreaMoney(christmasDiscountAmount);
     if (checkIsPositiveNumber(christmasDiscountAmount)) {
-      Console.print(
-        `${EVENT_NAME.christmas}: -${convertNumberToKoreaMoney(
-          christmasDiscountAmount
-        )}`
-      );
+      Console.print(`${EVENT_NAME.christmas}: -${koreaMoney}`);
     }
     return christmasDiscountAmount;
   },
@@ -94,12 +92,9 @@ const OutputView = {
       date,
       orderedCategories
     );
+    const koreaMoney = convertNumberToKoreaMoney(weekdaysDiscountAmount);
     if (checkIsPositiveNumber(weekdaysDiscountAmount)) {
-      Console.print(
-        `${EVENT_NAME.weekdays}: -${convertNumberToKoreaMoney(
-          weekdaysDiscountAmount
-        )}`
-      );
+      Console.print(`${EVENT_NAME.weekdays}: -${koreaMoney}`);
     }
   },
   printWeekendsDiscountAmount(date, orderedCategories) {
@@ -107,36 +102,27 @@ const OutputView = {
       date,
       orderedCategories
     );
+    const koreaMoney = convertNumberToKoreaMoney(weekendsDiscountAmount);
     if (checkIsPositiveNumber(weekendsDiscountAmount)) {
-      Console.print(
-        `${EVENT_NAME.weekends}: -${convertNumberToKoreaMoney(
-          weekendsDiscountAmount
-        )}`
-      );
+      Console.print(`${EVENT_NAME.weekends}: -${koreaMoney}`);
     }
     return weekendsDiscountAmount;
   },
   printSpecialDiscountAmount(date) {
     const specialDiscountAmount =
       discountCalculator.calculateSpecialDiscount(date);
+    const koreaMoney = convertNumberToKoreaMoney(specialDiscountAmount);
     if (specialDiscountAmount !== 0) {
-      Console.print(
-        `${EVENT_NAME.special}: -${convertNumberToKoreaMoney(
-          specialDiscountAmount
-        )}`
-      );
+      Console.print(`${EVENT_NAME.special}: -${koreaMoney}`);
     }
     return specialDiscountAmount;
   },
   printGiveawayDiscountAmount(sumAmount) {
     const giveawayDiscountAmount =
       discountCalculator.calculateGiveawayDiscount(sumAmount);
+    const koreaMoney = convertNumberToKoreaMoney(giveawayDiscountAmount);
     if (checkIsNotZero(giveawayDiscountAmount)) {
-      Console.print(
-        `${EVENT_NAME.giveaway}: -${convertNumberToKoreaMoney(
-          giveawayDiscountAmount
-        )}`
-      );
+      Console.print(`${EVENT_NAME.giveaway}: -${koreaMoney}`);
     }
     return giveawayDiscountAmount;
   },
@@ -188,13 +174,12 @@ const OutputView = {
     Console.print(EMPTY_LINE);
   },
   printPriceAfterDiscount(priceBeforeDiscount, totalBenefitsPrice) {
+    const discountKoreaMoney = convertNumberToKoreaMoney(
+      priceBeforeDiscount - totalBenefitsPrice.total
+    );
     Console.print(BENEFITS_MESSAGE.priceAfterDiscount);
     if (checkIsTypeObject(totalBenefitsPrice)) {
-      Console.print(
-        `${convertNumberToKoreaMoney(
-          priceBeforeDiscount - totalBenefitsPrice.total
-        )}`
-      );
+      Console.print(discountKoreaMoney);
     } else {
       Console.print(convertNumberToKoreaMoney(priceBeforeDiscount));
     }
