@@ -11,6 +11,7 @@ import {
 } from "../utils/condition.js";
 import { stringToNumber } from "../utils/conversion.js";
 
+// 9 와 같이 숫자로 들어온다
 export class MenuCount {
   #stringData;
 

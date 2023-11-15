@@ -11,6 +11,7 @@ import {
 } from "../utils/condition.js";
 import { stringToNumber } from "../utils/conversion.js";
 
+// 입력값, "10"의 형식으로 들어온다
 export class VisitDate {
   #stringData;
 

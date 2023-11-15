@@ -4,6 +4,7 @@ import { ThrowManager } from "../managers/ThrowManager.js";
 import { checkIsOverMaximum } from "../utils/condition.js";
 import { makeObjectValuesToArray } from "../utils/conversion.js";
 
+// [[시저샐러드,2],[해산물파스타,1],[레드와인-1]]처럼 2차원 배열이 들어온다
 export class MenuMatrix {
   #matrixData;
 

@@ -4,6 +4,7 @@ import { ThrowManager } from "../managers/ThrowManager.js";
 import { checkIsEmpty, checkIsIncluded } from "../utils/condition.js";
 import { makeObjectValuesToArrayFlat } from "../utils/conversion.js";
 
+// "크리스마스파스타"와 같이 실제 메뉴에 있는 이름으로 들어온다
 export class MenuName {
   #stringData;
 

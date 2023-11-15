@@ -3,6 +3,7 @@ import { ThrowManager } from "../managers/ThrowManager.js";
 import { checkIsEmpty, checkIsIncluded } from "../utils/condition.js";
 import { divideData } from "../utils/conversion.js";
 
+// 입력값, "메뉴1-2,메뉴2-4,메뉴3-7"의 형식으로 들어온다
 export class MenuUnprocessed {
   #stringData;
 
