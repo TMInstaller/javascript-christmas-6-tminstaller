@@ -1,5 +1,6 @@
 import { BENEFITS, CHRISTMAS_D_DAY } from "../constants/number.js";
 import { EventCheckManager } from "../managers/EventCheckManager.js";
+import { checkIsOver } from "../utils/condition.js";
 import { makeMatrixOrderableMenu } from "../utils/creation.js";
 
 export class DiscountCalculator {
@@ -7,11 +8,11 @@ export class DiscountCalculator {
     this.eventCheckManager = new EventCheckManager();
   }
   calculateChristmasDiscount(date) {
-    if (date <= CHRISTMAS_D_DAY.endDate) {
-      return (
+    if (checkIsOver(CHRISTMAS_D_DAY.endDate, date)) {
+      const christmasDiscount =
         CHRISTMAS_D_DAY.initialDiscountAmount +
-        (date - 1) * CHRISTMAS_D_DAY.discountRateIncrease
-      );
+        (date - 1) * CHRISTMAS_D_DAY.discountRateIncrease;
+      return christmasDiscount;
     }
     return BENEFITS.none;
   }
@@ -21,7 +22,8 @@ export class DiscountCalculator {
       31,
     ];
     if (weekDays.includes(date) && !isNaN(orderedCategories.DESSERT)) {
-      return BENEFITS.dayOfWeek * orderedCategories.DESSERT;
+      const weekdaysDisocunt = BENEFITS.dayOfWeek * orderedCategories.DESSERT;
+      return weekdaysDisocunt;
     }
     return BENEFITS.none;
   }
@@ -40,7 +42,7 @@ export class DiscountCalculator {
     return BENEFITS.none;
   }
   calculateGiveawayDiscount(price) {
-    if (price >= BENEFITS.giveawayCondition) {
+    if (checkIsOver(price, BENEFITS.giveawayCondition)) {
       return BENEFITS.giveaway;
     }
     return BENEFITS.none;
