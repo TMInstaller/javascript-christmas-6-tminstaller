@@ -1,6 +1,7 @@
 import { ERROR_MESSAGE } from "../constants/error.js";
 import { MENU_COUNT } from "../constants/number.js";
 import { BEVERAGE } from "../constants/word.js";
+import { ThrowManager } from "../managers/ThrowManager.js";
 import { checkIsOverMaximum } from "../utils/condition.js";
 import { makeObjectValuesToArray } from "../utils/conversion.js";
 
@@ -26,7 +27,7 @@ export class MenuMatrix {
     let checkDuplicateSet = new Set();
     for (const arrayData of matrixData) {
       if (checkDuplicateSet.has(arrayData[0])) {
-        throw new Error(ERROR_MESSAGE.isDuplicated);
+        ThrowManager.duplicatedError();
       }
       checkDuplicateSet.add(arrayData[0]);
     }
@@ -39,6 +40,6 @@ export class MenuMatrix {
         return;
       }
     }
-    throw new Error(ERROR_MESSAGE.isInvalidOrder);
+    ThrowManager.invalidOrderError();
   }
 }
