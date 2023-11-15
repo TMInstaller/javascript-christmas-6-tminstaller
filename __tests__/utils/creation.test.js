@@ -1,11 +1,11 @@
 import {
   createCategoryCounts,
-  makeMatrixOrderedMenu,
+  makeMatrixOrderableMenu,
 } from "../../src/utils/creation";
 
-describe("makeMatrixOrderedMenu 함수 테스트", () => {
+describe("makeMatrixOrderableMenu 함수 테스트", () => {
   test("2차원 메뉴 배열을 생성한다", () => {
-    const matrix = makeMatrixOrderedMenu();
+    const matrix = makeMatrixOrderableMenu();
     expect(matrix).toBeInstanceOf(Array);
     // 예상되는 구조를 가진 몇 가지 항목을 검사
     expect(matrix).toEqual(
@@ -22,7 +22,7 @@ describe("makeMatrixOrderedMenu 함수 테스트", () => {
 });
 
 describe("createCategoryCounts 함수 테스트", () => {
-  const matrixOrderedMenu = makeMatrixOrderedMenu();
+  const matrixOrderedMenu = makeMatrixOrderableMenu();
 
   test("주문된 메뉴에 따라 카테고리별 수량을 정확하게 계산한다", () => {
     const orderedMenu = [

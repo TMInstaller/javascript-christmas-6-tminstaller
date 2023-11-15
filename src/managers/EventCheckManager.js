@@ -2,12 +2,12 @@ import { EVENT } from "../constants/number.js";
 import { BADGE_NAME } from "../constants/word.js";
 import {
   createCategoryCounts,
-  makeMatrixOrderedMenu,
+  makeMatrixOrderableMenu,
 } from "../utils/creation.js";
 
 export class EventCheckManager {
   checkHowManyMenuInCategory(orderedMenu) {
-    const menuMatrix = makeMatrixOrderedMenu();
+    const menuMatrix = makeMatrixOrderableMenu();
     const categoryCounts = createCategoryCounts(orderedMenu, menuMatrix);
     return categoryCounts;
   }

@@ -3,7 +3,7 @@ import { PRICE } from "../constants/number.js";
 import { FULL_MENU } from "../constants/word.js";
 import { increaseOrMaintain } from "./update.js";
 
-export const makeMatrixOrderedMenu = () => {
+export const makeMatrixOrderableMenu = () => {
   // 한글 이름, 영어 이름, 가격을 포함하는 2차원 배열 생성
   const matrixOrderedMenu = [];
   Object.entries(FULL_MENU).forEach(([category, items]) => {
