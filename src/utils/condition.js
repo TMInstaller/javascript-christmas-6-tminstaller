@@ -1,3 +1,4 @@
+// self-feedback: 이 파일에 있는 두 종류의 함수들을 에러를 출력하는 객체로 분리하는게 더 좋았을까?
 import { ERROR_MESSAGE } from "../constants/error.js";
 
 export const checkIsEmpty = (data) => {

@@ -8,6 +8,7 @@ export const divideData = (stringData, divisor) => {
   return stringData.split(divisor);
 };
 
+// 깊이 상관없이 모든 객체의 값들을 하나의 배열에 넣기위해 사용
 export const makeObjectValuesToArrayFlat = (objectData) => {
   return Object.values(objectData).flatMap((value) => Object.values(value));
 };
