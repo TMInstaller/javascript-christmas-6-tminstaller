@@ -1,6 +1,6 @@
 import { ERROR_MESSAGE } from "../constants/error.js";
-import { MENU_COUNT, PRICE } from "../constants/number.js";
-import { BEVERAGE, FULL_MENU } from "../constants/word.js";
+import { MENU_COUNT } from "../constants/number.js";
+import { BEVERAGE } from "../constants/word.js";
 import { checkIsOverMaximum } from "../utils/condition.js";
 import { makeObjectValuesToArray } from "../utils/conversion.js";
 
@@ -33,9 +33,7 @@ export class MenuMatrix {
   }
 
   #isMatrixHasOnlyBeverages(matrixData) {
-    // 음료가 가지고 있는 이름들만 모아놓은 배열 생성
     const beveragesList = makeObjectValuesToArray(BEVERAGE);
-    // 음료 안에 들어있지 않다면 return, 모든 순회를 마쳤다면 throw
     for (const arrayData of matrixData) {
       if (!beveragesList.includes(arrayData[0])) {
         return;
