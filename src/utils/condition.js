@@ -1,4 +1,3 @@
-// self-feedback: 뭔가 이름과 return값이 안맞는 것들이 존재한다..
 export const checkIsEmpty = (data) => {
   return !data?.trim().length;
 };
