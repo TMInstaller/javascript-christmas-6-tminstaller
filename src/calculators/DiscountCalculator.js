@@ -1,3 +1,4 @@
+import { BENEFITS, CHRISTMAS_D_DAY } from "../constants/number.js";
 import { EventCheckManager } from "../managers/EventCheckManager.js";
 import { makeMatrixOrderedMenu } from "../utils/creation.js";
 
@@ -6,39 +7,42 @@ export class DiscountCalculator {
     this.eventCheckManager = new EventCheckManager();
   }
   calculateChristmasDiscount(date) {
-    if (date < 26) {
-      return 1000 + (date - 1) * 100;
+    if (date <= CHRISTMAS_D_DAY.endDate) {
+      return (
+        CHRISTMAS_D_DAY.initialDiscountAmount +
+        (date - 1) * CHRISTMAS_D_DAY.discountRateIncrease
+      );
     }
-    return 0;
+    return BENEFITS.none;
   }
   calculateWeekdaysDiscount(date, orderedCategories) {
     const weekDays = [
       4, 5, 6, 7, 11, 12, 13, 14, 18, 19, 20, 21, 25, 26, 27, 28,
     ];
     if (weekDays.includes(date) && !isNaN(orderedCategories.DESSERT)) {
-      return 2023 * orderedCategories.DESSERT;
+      return BENEFITS.dayOfWeek * orderedCategories.DESSERT;
     }
-    return 0;
+    return BENEFITS.none;
   }
   calculateWeekendsDiscount(date, orderedCategories) {
     const specialDays = [1, 2, 8, 9, 15, 16, 22, 23, 29, 30];
     if (specialDays.includes(date) && !isNaN(orderedCategories.MAIN)) {
-      return 2023 * orderedCategories.MAIN;
+      return BENEFITS.dayOfWeek * orderedCategories.MAIN;
     }
-    return 0;
+    return BENEFITS.none;
   }
   calculateSpecialDiscount(date) {
     const specialDays = [3, 10, 17, 24, 25, 31];
     if (specialDays.includes(date)) {
-      return 1000;
+      return BENEFITS.special;
     }
-    return 0;
+    return BENEFITS.none;
   }
   calculateGiveawayDiscount(price) {
-    if (price >= 120000) {
-      return 25000;
+    if (price >= BENEFITS.giveawayCondition) {
+      return BENEFITS.giveaway;
     }
-    return 0;
+    return BENEFITS.none;
   }
   calculateTotalAmount(matrixData) {
     const orderedMenu = makeMatrixOrderedMenu();

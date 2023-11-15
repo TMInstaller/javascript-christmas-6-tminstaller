@@ -36,4 +36,12 @@ export const MENU_COUNT = Object.freeze({
   maximun: 20,
 });
 
+export const BENEFITS = Object.freeze({
+  none: 0,
+  giveawayCondition: 120000,
+  giveaway: 25000,
+  dayOfWeek: 2023,
+  special: 1000,
+});
+
 export const GIVEAWAY_COUNT = 1;
